@@ -16,18 +16,6 @@ import * as ProductActions from '../../store/actions/products';
 
 const FORM_INPUT_UPDATE = 'UPDATE';
 
-
-
-// TODO 不清楚 state中的 inputValues inputValidities 与 action中 input关系 
-// state 的数据结构是 formReducer{inputValues输入值,
-                //  inputIdentifier判断值是否能用,
-                //  formIsValid 判断整个表单是否能传值}
-// action 中的数据结构是  dispatchFormState({
-            // 来源于 初始化的 useReducer 改变state
-            // type: FORM_INPUT_UPDATE, // dispatch什么样的方法
-            // value: text, // 传入输入值
-            // isValid: isValid,//判断输入的值是否能用
-            // input: inputIdentifier  // 什么样会trigger这个dispatch
 const formReducer = (state, action) => {
     // 初始化的 state 是 由useReducer中的formState定义的
     // 初始化的action是dispatchFormState定义的 
@@ -37,27 +25,14 @@ const formReducer = (state, action) => {
         const updateValues = {
             // 在原有的  inputValues基础上加上了  dispatchFormState新添加的 value
             ...state.inputValues,// 此处copy的是 useReducer中的formReducer中的 inputValues
-            [action.input]: action.value
-             //根据 已有的 action的input 也就是dispatchFormState中的 inputIdentifier 确定 
-            //在修改了 value也就是用户的输入值
-        };
-
-        const updateInputValidaties = {
-            // 在原有的  inputValues基础上加上了  dispatchFormState新添加的 value
-            ...state.inputValidities,// 此处copy的是 useReducer中的formReducer中的 inputValidities
-            [action.input]: action.isValid //根据 已有的 action的isValid 修改了 也就是用户输入的是否是有效的
-        }
-        let updateFormIsValid = true;
-        for (const key in updateInputValidaties){
-            updateFormIsValid = updateFormIsValid  && updateInputValidaties[key];//想要全部的validate就要遍历所有的inputValidaties  
+            [action.input]:action.value //根据 已有的 action的input修改了 value也就是用户的输入值
         }
         return {
-            formIsValid:updateFormIsValid,
-            inputValues: updateValues,
-            inputValidities:updateInputValidaties
+            ...state,
+            inputValue:updateValues
         };
+
     }
-    return state;
 }
 
 
@@ -77,7 +52,7 @@ const EditProductScreen = props => {
         // 以上两个命名是随意的
         // 类似于trigger可以 当用户键入时进行判断
         // initialState
-        formReducer,//传入的方法怎样update
+        formReducer,
         {
             inputValues: {
                 //代替了 设置state的方法
@@ -96,7 +71,7 @@ const EditProductScreen = props => {
         }
     );
 
-    // const [titleIsValid, setTitleIsValid] = useState(false);
+    const [titleIsValid, setTitleIsValid] = useState(false);
 
     // const [title, setTitle] = useState(
     //     editProdcut ? editProdcut.title : ' ');
@@ -108,31 +83,30 @@ const EditProductScreen = props => {
 
     const submitHandler = useCallback(() => {
         // useCallback确保这个方法不会在每次render的时候都被创建
-        if (!formState.formIsValid ) {
+        if (!titleIsValid) {
             Alert.alert('Wrong Input!', 'Please check the error in the from', [{ text: 'Okey' }])
             return;
         }
         if (editProdcut) {
             dispatch(ProductActions.updateProduct(prodId,
-                formState.inputValues.title,
-                formState.inputValues.description,
-                formState.inputValues.imageUrl)
+                title,
+                description,
+                imageUrl)
             )
         } else {
-            dispatch(ProductActions.createProduct(
-                formState.inputValues.title,
-                formState.inputValues.description,
-                formState.inputValues.imageUrl,
-                +formState.inputValues.price //加上+后表示是int 而不是 string 
+            dispatch(ProductActions.createProduct(title,
+                description,
+                imageUrl,
+                +price //加上+后表示是int 而不是 string 
             )
             );
         }
         props.navigation.goBack();// 在点击右上角的提交按钮之后会自动跳转
-    }, [dispatch,  formState.inputValues.imageUrl,  formState.inputValues.title,  formState.inputValues.description,  formState.inputValues.price, prodId, formState.formIsValid])
+    }, [dispatch, imageUrl, title, description, price, prodId, titleIsValid])
 
     useEffect(() => {
         props.navigation.setParams({ submit: submitHandler })
-    }, [submitHandler])
+    },[submitHandler])
 
     const textChangeHandler = (inputIdentifier, text) => {
         // useReducer用来处理 dispatch的地方
@@ -162,22 +136,20 @@ const EditProductScreen = props => {
                     <Text style={styles.label}>TITLE</Text>
                     <TextInput
                         style={styles.input}
-                        // value={title}
-                        value={formState.inputValues.title}
+                        value={title}
                         onChangeText={textChangeHandler.bind(this, 'title')}//textChangeHandler最后的一个参数会作为React Native 自动传入 所以不需要再调用时bind
                         keyboardType='default'
                         autoCapitalize='sentences'
                         // autoCorrect=''
-                        returnKeyType='next'//  点击界面上return 时会自动跳转到 下一行
+                        returnKeyType='next'// 点击界面上return 时会自动跳转到 下一行
                     />
-                    {!formState.inputValidities.title && <Text>Please enter a valid title</Text>}
+                    {!titleIsValid && <Text>Please enter a valid title</Text>}
                 </View>
                 <View style={styles.formControl}>
                     <Text style={styles.label}>IMAGE URL</Text>
                     <TextInput
                         style={styles.input}
-                        // value={imageUrl}
-                        value={formState.inputValues.imageUrl}
+                        value={imageUrl}
                         onChangeText={textChangeHandler.bind(this, 'imageUrl')}
                     />
                 </View>
@@ -186,8 +158,7 @@ const EditProductScreen = props => {
                     <Text style={styles.label}>PRICE</Text>
                     <TextInput
                         style={styles.input}
-                        // value={price}
-                        value={formState.inputValues.price}
+                        value={price}
                         onChangeText={textChangeHandler.bind(this, 'price')}
                         keyboardType='decimal-pad'
                     />
@@ -196,8 +167,7 @@ const EditProductScreen = props => {
                     <Text style={styles.label}>DESCRIPTION</Text>
                     <TextInput
                         style={styles.input}
-                        // value={description}
-                        value={formState.inputValues.description} 
+                        value={description}
                         onChangeText={textChangeHandler.bind(this, 'description')}
                     />
                 </View>
@@ -242,6 +212,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
 
     },
+
+
+
 });
 
 export default EditProductScreen;

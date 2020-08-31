@@ -128,7 +128,7 @@ const EditProductScreen = props => {
             );
         }
         props.navigation.goBack();// 在点击右上角的提交按钮之后会自动跳转
-    }, [dispatch,  formState.inputValues.imageUrl,  formState.inputValues.title,  formState.inputValues.description,  formState.inputValues.price, prodId, formState.formIsValid])
+    }, [dispatch,  formState.inputValues.imageUrl,  formState.inputValues.,  formState.inputValues.description,  formState.inputValues.price, prodId, formState.formIsValid])
 
     useEffect(() => {
         props.navigation.setParams({ submit: submitHandler })
@@ -168,9 +168,9 @@ const EditProductScreen = props => {
                         keyboardType='default'
                         autoCapitalize='sentences'
                         // autoCorrect=''
-                        returnKeyType='next'//  点击界面上return 时会自动跳转到 下一行
+                        returnKeyType='next'// 点击界面上return 时会自动跳转到 下一行
                     />
-                    {!formState.inputValidities.title && <Text>Please enter a valid title</Text>}
+                    {!titleIsValid && <Text>Please enter a valid title</Text>}
                 </View>
                 <View style={styles.formControl}>
                     <Text style={styles.label}>IMAGE URL</Text>

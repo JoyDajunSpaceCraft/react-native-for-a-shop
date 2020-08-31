@@ -168,7 +168,7 @@ const EditProductScreen = props => {
                         keyboardType='default'
                         autoCapitalize='sentences'
                         // autoCorrect=''
-                        returnKeyType='next'//  点击界面上return 时会自动跳转到 下一行
+                        returnKeyType='next'// 点击界面上return 时会自动跳转到 下一行
                     />
                     {!formState.inputValidities.title && <Text>Please enter a valid title</Text>}
                 </View>

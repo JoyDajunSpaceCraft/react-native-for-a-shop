@@ -1,7 +1,7 @@
 // npm install --save redux react-redux react-navigation react-navigation-header-buttons
 // expo install react-native-gesture-handler react-native-reanimated
 //npm install --save expo-font
-//npm install --save validate.js 这个是用来判断输入是否准确的插件
+//npm install --save validate.js
 
 import React, { useState } from 'react';
 import { createStore, combineReducers } from 'redux';

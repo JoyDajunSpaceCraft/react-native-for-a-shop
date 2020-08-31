@@ -108,27 +108,26 @@ const EditProductScreen = props => {
 
     const submitHandler = useCallback(() => {
         // useCallback确保这个方法不会在每次render的时候都被创建
-        if (!formState.formIsValid ) {
+        if (!formState.formIsValid) {
             Alert.alert('Wrong Input!', 'Please check the error in the from', [{ text: 'Okey' }])
             return;
         }
         if (editProdcut) {
             dispatch(ProductActions.updateProduct(prodId,
-                formState.inputValues.title,
-                formState.inputValues.description,
-                formState.inputValues.imageUrl)
+                title,
+                description,
+                imageUrl)
             )
         } else {
-            dispatch(ProductActions.createProduct(
-                formState.inputValues.title,
-                formState.inputValues.description,
-                formState.inputValues.imageUrl,
-                +formState.inputValues.price //加上+后表示是int 而不是 string 
+            dispatch(ProductActions.createProduct(title,
+                description,
+                imageUrl,
+                +price //加上+后表示是int 而不是 string 
             )
             );
         }
         props.navigation.goBack();// 在点击右上角的提交按钮之后会自动跳转
-    }, [dispatch,  formState.inputValues.imageUrl,  formState.inputValues.title,  formState.inputValues.description,  formState.inputValues.price, prodId, formState.formIsValid])
+    }, [dispatch, imageUrl, title, description, price, prodId, titleIsValid])
 
     useEffect(() => {
         props.navigation.setParams({ submit: submitHandler })
@@ -168,9 +167,9 @@ const EditProductScreen = props => {
                         keyboardType='default'
                         autoCapitalize='sentences'
                         // autoCorrect=''
-                        returnKeyType='next'//  点击界面上return 时会自动跳转到 下一行
+                        returnKeyType='next'// 点击界面上return 时会自动跳转到 下一行
                     />
-                    {!formState.inputValidities.title && <Text>Please enter a valid title</Text>}
+                    {!titleIsValid && <Text>Please enter a valid title</Text>}
                 </View>
                 <View style={styles.formControl}>
                     <Text style={styles.label}>IMAGE URL</Text>
