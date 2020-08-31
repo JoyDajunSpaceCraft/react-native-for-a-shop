@@ -18,7 +18,8 @@ const UserProductsScreen = props => {
         props.navigation.navigate('EditProduct', { productId: id }); // 点击就指向 EditProduct  并且传入参数 id 
     };
     const deleteHandler = (id) => {
-        console.log(userProducts);
+        console.log(userProducts.ownerId)
+
         //删除商品时 弹出的确认框
         Alert.alert("Are you sure?",//标题
             "Do you really want to delete this item", //内容 
@@ -26,10 +27,8 @@ const UserProductsScreen = props => {
                 //给了两个按钮 
                 { text: 'No', style: 'default' },
                 {
-                    text: 'Yes', style: 'destructive', 
-                    onPress:() => {
+                    text: 'Yes', style: 'destructive', onPress=() => {
                         // 按下之后就实现删除方法
-                        //这里不能用 userProduct 实现 而是要去去每个条目里面实现 所以传入的 FlatList 中的参数
                         dispatch(ProductActions.deleteProduct(id))
                     }
                 },
@@ -50,7 +49,6 @@ const UserProductsScreen = props => {
                         title={itemData.item.title}
                         price={itemData.item.price}
                         onSelect={() => {
-
                             editProductHandler(itemData.item.id)
                         }}
                     >
@@ -58,16 +56,13 @@ const UserProductsScreen = props => {
                             color={Colors.primary}
                             title="Edit"
                             onPress={() => {
-                                console.log(itemData)
                                 editProductHandler(itemData.item.id) //优化代码结构！！！
                             }}
                         />
                         <Button
                             color={Colors.primary}
                             title="Delete"
-                            onPress={
-
-                                deleteHandler.bind(this, itemData.item.id)} />
+                            onPress={deleteHandler.bind(this, itemData.item.id)} />
                     </ProductItem>
             }
         />

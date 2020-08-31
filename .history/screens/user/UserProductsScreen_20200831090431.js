@@ -29,7 +29,6 @@ const UserProductsScreen = props => {
                     text: 'Yes', style: 'destructive', 
                     onPress:() => {
                         // 按下之后就实现删除方法
-                        //这里不能用 userProduct 实现 而是要去去每个条目里面实现 所以传入的 FlatList 中的参数
                         dispatch(ProductActions.deleteProduct(id))
                     }
                 },
@@ -58,7 +57,6 @@ const UserProductsScreen = props => {
                             color={Colors.primary}
                             title="Edit"
                             onPress={() => {
-                                console.log(itemData)
                                 editProductHandler(itemData.item.id) //优化代码结构！！！
                             }}
                         />
@@ -66,7 +64,7 @@ const UserProductsScreen = props => {
                             color={Colors.primary}
                             title="Delete"
                             onPress={
-
+                                console.log(itemData);
                                 deleteHandler.bind(this, itemData.item.id)} />
                     </ProductItem>
             }

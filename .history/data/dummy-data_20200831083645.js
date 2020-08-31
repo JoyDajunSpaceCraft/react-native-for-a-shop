@@ -37,7 +37,7 @@ const PRODUCTS = [
     'p5',
     'u3',
     'PowerBook',
-    'https://pics6.baidu.com/feed/95eef01f3a292df5970add318f1bf56535a873fc.jpeg?token=049fed9c4f15d79343d739f66e47264c&s=BDB1EB1701C3714B6C68D4FF03000021',
+    'https://get.pxhere.com/photo/laptop-computer-macbook-mac-screen-water-board-keyboard-technology-air-mouse-photo-airport-aircraft-tablet-aviation-office-black-monitor-keys-graphic-hardware-image-pc-exhibition-multimedia-calculator-vector-water-cooling-floppy-disk-phased-out-desktop-computer-netbook-personal-computer-computer-monitor-electronic-device-computer-hardware-display-device-448748.jpg',
     'Awesome hardware, crappy keyboard and a hefty price. Buy now before a new one is released!',
     2299.99
   ),
@@ -45,7 +45,7 @@ const PRODUCTS = [
     'p6',
     'u1',
     'Pen & Paper',
-    'https://pics5.baidu.com/feed/34fae6cd7b899e516fd6a6bc718d7036c9950de9.jpeg?token=b2f690c29bfb94410bf6f1b81fcab46a&s=5E0CC1086A563ADC2E14300D0300E0C0',
+    'https://cdn.pixabay.com/photo/2015/10/03/02/14/pen-969298_1280.jpg',
     "Can be used for role-playing (not the kind of role-playing you're thinking about...).",
     5.49
   ),
@@ -53,7 +53,7 @@ const PRODUCTS = [
     'p7',
     'u2',
     'Postcard',
-    'https://pics1.baidu.com/feed/fcfaaf51f3deb48ff359a3edc335932c2df57884.jpeg?token=132fe4e4749c74282b306a6de32c6f31&s=04E0F9145AD24BDCA018F00D0300A0E1',
+    'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3618882218,1626555737&fm=26&gp=0.jpg',
     "Famous K-pop star && leader in GOT7",
     999
   )

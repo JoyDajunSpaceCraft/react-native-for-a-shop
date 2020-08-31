@@ -5,7 +5,8 @@ import {
     Text,
     TextInput,
     ScrollView,
-    Platform
+    Platform,
+    Alert
 } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector, useDispatch } from 'react-redux';
@@ -30,7 +31,10 @@ const EditProductScreen = props => {
     const [description, setDescription] = useState(
         editProdcut ? editProdcut.description : '');
 
-
+    const deleteHandler = ()=>{
+        //删除商品时 弹出的确认框
+        Alert
+    }
 
     const submitHandler = useCallback(() => {
         // 确保这个方法不会在每次render的时候都被创建
@@ -48,7 +52,6 @@ const EditProductScreen = props => {
             )
             );
         }
-        props.navigation.goBack();// 在点击右上角的提交按钮之后会自动跳转
     }, [dispatch, imageUrl, title, description, price, prodId])
 
     useEffect(() => {

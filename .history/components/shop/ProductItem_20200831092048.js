@@ -10,6 +10,7 @@ const ProductItem = props => {
     }
     return (
         <Card style={styles.product}>
+            
             <View style={styles.touchable}>
                 <TouchableCmp onPress={props.onSelect} useForeground>
                     <View>

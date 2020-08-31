@@ -45,7 +45,7 @@ const PRODUCTS = [
     'p6',
     'u1',
     'Pen & Paper',
-    'https://pics5.baidu.com/feed/34fae6cd7b899e516fd6a6bc718d7036c9950de9.jpeg?token=b2f690c29bfb94410bf6f1b81fcab46a&s=5E0CC1086A563ADC2E14300D0300E0C0',
+    'https://cdn.pixabay.com/photo/2015/10/03/02/14/pen-969298_1280.jpg',
     "Can be used for role-playing (not the kind of role-playing you're thinking about...).",
     5.49
   ),
@@ -53,7 +53,7 @@ const PRODUCTS = [
     'p7',
     'u2',
     'Postcard',
-    'https://pics1.baidu.com/feed/fcfaaf51f3deb48ff359a3edc335932c2df57884.jpeg?token=132fe4e4749c74282b306a6de32c6f31&s=04E0F9145AD24BDCA018F00D0300A0E1',
+    'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3618882218,1626555737&fm=26&gp=0.jpg',
     "Famous K-pop star && leader in GOT7",
     999
   )

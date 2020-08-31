@@ -9,7 +9,8 @@ const ProductItem = props => {
         TouchableCmp = TouchableNativeFeedback;
     }
     return (
-        <Card style={styles.product}>
+        <View style={styles.product}>
+            
             <View style={styles.touchable}>
                 <TouchableCmp onPress={props.onSelect} useForeground>
                     <View>
@@ -30,13 +31,14 @@ const ProductItem = props => {
                     </View>
                 </TouchableCmp>
             </View>
-        </Card>
+        </View>
     )
 
 };
 
 const styles = StyleSheet.create({
     product: {
+       
         height: 300,
         margin: 20,
     },

@@ -13,7 +13,7 @@ const PRODUCTS = [
     'p2',
     'u1',
     'Blue Carpet',
-    'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=423147640,3297351263&fm=173&app=49&f=JPEG?w=640&h=447&s=A8C0F104825A7DD4D78D899B03004083',
+    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598843989209&di=681a9f505838dd12ee9f1d219fb47534&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201606%2F06%2F20160606170543_4TMvQ.thumb.700_0.jpeg',
     'Fits your red shirt perfectly. To stand on. Not to wear it.',
     99.99
   ),
@@ -21,7 +21,7 @@ const PRODUCTS = [
     'p3',
     'u2',
     'Coffee Mug',
-    'https://pics7.baidu.com/feed/962bd40735fae6cdef6feaff3d99a62143a70f00.jpeg?token=7fc9afd3c6b69159a951fd81d69c1003&s=B5B2E5370233639CDF0D95C5030060E1',
+    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598843989196&di=e8fbe27682f940d97c2840cb54baea90&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201707%2F31%2F20170731172251_VtATB.thumb.700_0.jpeg',
     'Can also be used for tea!',
     8.99
   ),
@@ -29,7 +29,7 @@ const PRODUCTS = [
     'p4',
     'u3',
     'The Book - Limited Edition',
-    'https://pics4.baidu.com/feed/3812b31bb051f8198679197ee99ee3e82e73e751.jpeg?token=c39963bcb1bf286ef78563049144ba99&s=EDA4845548523AD8C63CD50F0300F0C1',
+    'https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg?cs=srgb&dl=blur-blurred-book-pages-46274.jpg&fm=jpg',
     "What the content is? Why would that matter? It's a limited edition!",
     15.99
   ),
@@ -37,7 +37,7 @@ const PRODUCTS = [
     'p5',
     'u3',
     'PowerBook',
-    'https://pics6.baidu.com/feed/95eef01f3a292df5970add318f1bf56535a873fc.jpeg?token=049fed9c4f15d79343d739f66e47264c&s=BDB1EB1701C3714B6C68D4FF03000021',
+    'https://get.pxhere.com/photo/laptop-computer-macbook-mac-screen-water-board-keyboard-technology-air-mouse-photo-airport-aircraft-tablet-aviation-office-black-monitor-keys-graphic-hardware-image-pc-exhibition-multimedia-calculator-vector-water-cooling-floppy-disk-phased-out-desktop-computer-netbook-personal-computer-computer-monitor-electronic-device-computer-hardware-display-device-448748.jpg',
     'Awesome hardware, crappy keyboard and a hefty price. Buy now before a new one is released!',
     2299.99
   ),
@@ -45,7 +45,7 @@ const PRODUCTS = [
     'p6',
     'u1',
     'Pen & Paper',
-    'https://pics5.baidu.com/feed/34fae6cd7b899e516fd6a6bc718d7036c9950de9.jpeg?token=b2f690c29bfb94410bf6f1b81fcab46a&s=5E0CC1086A563ADC2E14300D0300E0C0',
+    'https://cdn.pixabay.com/photo/2015/10/03/02/14/pen-969298_1280.jpg',
     "Can be used for role-playing (not the kind of role-playing you're thinking about...).",
     5.49
   ),
@@ -53,7 +53,7 @@ const PRODUCTS = [
     'p7',
     'u2',
     'Postcard',
-    'https://pics1.baidu.com/feed/fcfaaf51f3deb48ff359a3edc335932c2df57884.jpeg?token=132fe4e4749c74282b306a6de32c6f31&s=04E0F9145AD24BDCA018F00D0300A0E1',
+    'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3618882218,1626555737&fm=26&gp=0.jpg',
     "Famous K-pop star && leader in GOT7",
     999
   )

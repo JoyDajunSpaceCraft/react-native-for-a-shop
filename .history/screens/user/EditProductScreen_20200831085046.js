@@ -48,7 +48,6 @@ const EditProductScreen = props => {
             )
             );
         }
-        props.navigation.goBack();// 在点击右上角的提交按钮之后会自动跳转
     }, [dispatch, imageUrl, title, description, price, prodId])
 
     useEffect(() => {

@@ -53,7 +53,7 @@ const PRODUCTS = [
     'p7',
     'u2',
     'Postcard',
-    'https://pics1.baidu.com/feed/fcfaaf51f3deb48ff359a3edc335932c2df57884.jpeg?token=132fe4e4749c74282b306a6de32c6f31&s=04E0F9145AD24BDCA018F00D0300A0E1',
+    'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3618882218,1626555737&fm=26&gp=0.jpg',
     "Famous K-pop star && leader in GOT7",
     999
   )
