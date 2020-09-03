@@ -22,10 +22,9 @@ export const fetchProducts = () => {
                 loadedProducts.push(new Product(key, 'u1', resData[key].title, resData[key].imageUrl, resData[key].description, resData[key].price))
             }
             // console.log(resData)
-            dispatch({
+            dispatch({ 
                 // 这里dispatch相当于 return 值了 只是来源于 firebase
-                type: SET_PRODUCTS, products: loadedProducts
-            });
+                type: SET_PRODUCTS, products: loadedProducts });
         }
         catch (error) {
             // send to custom analytics server
@@ -40,24 +39,13 @@ export const deleteProduct = productId => {
     //     type: DELETE_PRODUCT,
     //     pid: productId
     // };
-    return async dispatch => {
-        // 在delete之前send request
-        const response = await fetch(
-            `https://rn-complete-guide-d23c6.firebaseio.com/product/${productId}.json`, {
-            method: 'DELETE',//DELETE 没有header和body
-        });
-        if (!response.ok){
-            throw new Error("Something is wrong on delete!");
-        }
-        const resData = await response.json();
+    return async dispatch =>{
         dispatch({
             type: DELETE_PRODUCT,
-            pid: productId
+        pid: productId
         });
     }
 };
-
-
 export const createProduct = (title, description, imageUrl, price) => {
     // return a promiss
     return async dispatch => {
@@ -80,7 +68,7 @@ export const createProduct = (title, description, imageUrl, price) => {
         // console.log(resData)
 
         dispatch({
-
+            
             type: CREATE_PRODUCT,
             productData: {
                 // title:title,
@@ -102,7 +90,7 @@ export const createProduct = (title, description, imageUrl, price) => {
 export const updateProduct = (id, title, description, imageUrl) => {
 
 
-    const response = async dispatch => {
+    return async dispatch => {
         // update data 需要在写完之后点击 空白 才能保存 
         await fetch(
             // 要对js传入值时用``
@@ -118,9 +106,6 @@ export const updateProduct = (id, title, description, imageUrl) => {
                 imageUrl
             })
         });
-        if (!response.ok){
-            throw new Error("Something is wrong on update!");
-        }
         dispatch({
             type: UPDATE_PRODUCT,
             pid: id,
@@ -136,6 +121,5 @@ export const updateProduct = (id, title, description, imageUrl) => {
             }
         })
     }
-    
 
 }; 

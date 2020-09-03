@@ -138,9 +138,8 @@ const EditProductScreen = props => {
                         prodId,
                         formState.inputValues.title,
                         formState.inputValues.description,
-                        formState.inputValues.imageUrl
-                    )
-                );
+                        formState.inputValues.imageUrl)
+                )
             } else {
                 await dispatch(
                     ProductsActions.createProduct(
@@ -158,7 +157,7 @@ const EditProductScreen = props => {
 
         setIsLoading(false)
 
-    }, [dispatch, formState,prodId])
+    }, [dispatch, formState.inputValues.imageUrl, formState.inputValues.title, formState.inputValues.description, formState.inputValues.price, prodId, formState.formIsValid])
 
 
     useEffect(() => {

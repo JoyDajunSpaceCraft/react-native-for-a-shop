@@ -40,9 +40,9 @@ export const deleteProduct = productId => {
     //     type: DELETE_PRODUCT,
     //     pid: productId
     // };
-    return async dispatch => {
+    const response =  async dispatch => {
         // 在delete之前send request
-        const response = await fetch(
+        await fetch(
             `https://rn-complete-guide-d23c6.firebaseio.com/product/${productId}.json`, {
             method: 'DELETE',//DELETE 没有header和body
         });

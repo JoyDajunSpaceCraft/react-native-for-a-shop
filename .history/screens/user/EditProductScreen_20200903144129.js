@@ -1,17 +1,11 @@
-import React, {
-    useState,
-    useCallback,
-    useEffect,
-    useReducer
-} from 'react'; // useReducer 是可以将读入的内容分发的控件 与 redux reducer 无关
+import React, {useState, useCallback, useEffect, useReducer } from 'react'; // useReducer 是可以将读入的内容分发的控件 与 redux reducer 无关
 import {
     View,
     StyleSheet,
     ScrollView,
     Platform,
     Alert,
-    KeyboardAvoidingView,//加载keyBoard
-    ActivityIndicator,// 显示loading界面
+    KeyboardAvoidingView
 } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector, useDispatch } from 'react-redux';
@@ -19,7 +13,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import HeaderButton from '../../components/UI/HeaderButton';
 import * as ProductsActions from '../../store/actions/products';
 import Input from '../../components/UI/Input';
-import Colors from '../../constants/Colors';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -47,7 +40,7 @@ const formReducer = (state, action) => {
             //根据 已有的 action的input 也就是dispatchFormState中的 inputIdentifier 确定 
             //在修改了 value也就是用户的输入值
         };
-        console.log("update value 之后的", updateValues)
+        console.log("update value 之后的",updateValues)
 
         const updateInputValidaties = {
             // 在原有的  inputValues基础上加上了  dispatchFormState新添加的 value
@@ -63,8 +56,8 @@ const formReducer = (state, action) => {
             inputValues: updateValues,
             inputValidities: updateInputValidaties
         }
-        console.log("最后的return", returnval.inputValues)
-
+        console.log("最后的return",returnval.inputValues)
+        
         return returnval;
     }
     return state;
@@ -72,10 +65,6 @@ const formReducer = (state, action) => {
 
 
 const EditProductScreen = props => {
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState()// 一开始没有error所以设定为null
-
-
     // 在初始化参数之前先判断是在原有基础上更新还是 新建
     const prodId = props.navigation.getParam('productId');
     // console.log(prodId)
@@ -110,55 +99,34 @@ const EditProductScreen = props => {
         }
     );
 
+ 
 
-    useEffect(() => {
-        // 设置 当update 时出现错误的情况
-        if (error) {
-            Alert.alert("an Error happened on update !", error, [{ text: 'Okey' }]);// 这个error来源于submitHandler中 catch err.message
-        }
-    }, [error])
-
-
-    const submitHandler = useCallback(async () => {
-        // 提交 表单 用 async 实现 判断提交表单是否成功
+    const submitHandler = useCallback(() => {
         // useCallback确保这个方法不会在每次render的时候都被创建
         if (!formState.formIsValid) {
-            Alert.alert('Wrong Input!', 'Please check the error in the from', [
-                { text: 'Okey' }
-            ]);
+            Alert.alert('Wrong Input!', 'Please check the error in the from', [{ text: 'Okey' }])
             return;
         }
-        setError(null);
-        setIsLoading(true);
-        try {
-            if (editedProduct) {
-                // console.log("从formState中获得的value", formState.inputValues.title)
-                await dispatch(
-                    ProductsActions.updateProduct(
-                        prodId,
-                        formState.inputValues.title,
-                        formState.inputValues.description,
-                        formState.inputValues.imageUrl
-                    )
-                );
-            } else {
-                await dispatch(
-                    ProductsActions.createProduct(
-                        formState.inputValues.title,
-                        formState.inputValues.description,
-                        formState.inputValues.imageUrl,
-                        +formState.inputValues.price //加上+后表示是int 而不是 string 
-                    )
-                );
-            }
-            props.navigation.goBack();// 在点击右上角的提交按钮之后会自动跳转  放到try中 出现了错误就不会返回userProducts界面 
-        } catch (err) {
-            setError(err.message);
+        if (editedProduct) {
+            console.log("从formState中获得的value", formState.inputValues.title)
+            dispatch(ProductsActions.updateProduct(
+                prodId,
+                formState.inputValues.title,
+                formState.inputValues.description,
+                formState.inputValues.imageUrl)
+            )
+        } else {
+            dispatch(
+                ProductsActions.createProduct(
+                formState.inputValues.title,
+                formState.inputValues.description,
+                formState.inputValues.imageUrl,
+                +formState.inputValues.price //加上+后表示是int 而不是 string 
+            )
+            );
         }
-
-        setIsLoading(false)
-
-    }, [dispatch, formState,prodId])
+        props.navigation.goBack();// 在点击右上角的提交按钮之后会自动跳转
+    }, [dispatch, formState.inputValues.imageUrl, formState.inputValues.title, formState.inputValues.description, formState.inputValues.price, prodId, formState.formIsValid])
 
 
     useEffect(() => {
@@ -167,37 +135,29 @@ const EditProductScreen = props => {
 
     const inputChangeHandler = useCallback(
         (inputIdentifier, inputValue, inputValidity) => {
-            // useReducer用来处理 dispatch的地方
-            // let isValid = false
-            // if (text.trim().length > 0) {
-            //     // trim()删除了空格
-            //     // setTitleIsValid(false);
-            //     isValid = true
-            // }
-            // else {
-            // setTitleIsValid(true);
-            // }
-            // setTitle(text);
-            console.log("输入到input里面的通过 inputChangeHandler 方法传入的 ", inputValue) // 这里是
-            dispatchFormState({
-                // 来源于 初始化的 useReducer 改变state
-                type: FORM_INPUT_UPDATE, // dispatch什么样的方法
-                value: inputValue, // 传入输入值
-                isValid: inputValidity,//判断输入的值是否能用
-                input: inputIdentifier  // 什么样会trigger这个dispatch
-            })
-        }, [dispatchFormState])
-
-    if (isLoading) {
-        return (
-            <View style={styles.centered}>
-                <ActivityIndicator size="large" color={Colors.primary} />
-            </View>
-        )
-    }
+        // useReducer用来处理 dispatch的地方
+        // let isValid = false
+        // if (text.trim().length > 0) {
+        //     // trim()删除了空格
+        //     // setTitleIsValid(false);
+        //     isValid = true
+        // }
+        // else {
+        // setTitleIsValid(true);
+        // }
+        // setTitle(text);
+        console.log("输入到input里面的通过 inputChangeHandler 方法传入的 ", inputValue) // 这里是
+        dispatchFormState({
+            // 来源于 初始化的 useReducer 改变state
+            type: FORM_INPUT_UPDATE, // dispatch什么样的方法
+            value: inputValue, // 传入输入值
+            isValid: inputValidity,//判断输入的值是否能用
+            input: inputIdentifier  // 什么样会trigger这个dispatch
+        })
+    }, [dispatchFormState])
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={100}>
+        <KeyboardAvoidingView style={{flex:1}} behavior="padding" keyboardVerticalOffset={100}>
             <ScrollView>
                 <View style={styles.form}>
                     <Input
@@ -284,11 +244,6 @@ const styles = StyleSheet.create({
     form: {
         margin: 20
     },
-    centered: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
 
 });
 

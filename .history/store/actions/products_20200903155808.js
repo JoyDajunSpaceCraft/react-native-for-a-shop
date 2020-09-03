@@ -40,9 +40,9 @@ export const deleteProduct = productId => {
     //     type: DELETE_PRODUCT,
     //     pid: productId
     // };
-    return async dispatch => {
+    const response =  async dispatch => {
         // 在delete之前send request
-        const response = await fetch(
+        await fetch(
             `https://rn-complete-guide-d23c6.firebaseio.com/product/${productId}.json`, {
             method: 'DELETE',//DELETE 没有header和body
         });
@@ -106,7 +106,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
         // update data 需要在写完之后点击 空白 才能保存 
         await fetch(
             // 要对js传入值时用``
-            `https://rn-complete-guide-d23c6.firebaseio.com/product/${id}.json`, {
+            `https://rn-complete-guide-d23c6.firebaseio.com/product/${id}.jsn`, {
             method: 'PATCH',// PUT fully overwrite , PATCH update place where you tell the data
             headers: {
                 'Content-type': 'application/json'

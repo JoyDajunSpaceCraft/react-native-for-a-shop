@@ -113,19 +113,17 @@ const EditProductScreen = props => {
 
     useEffect(() => {
         // 设置 当update 时出现错误的情况
-        if (error) {
-            Alert.alert("an Error happened on update !", error, [{ text: 'Okey' }]);// 这个error来源于submitHandler中 catch err.message
+        if(error){
+            Alert.alert("an Error happened on update !",error,[{text:'Okey'}]);// 这个error来源于submitHandler中 catch err.message
         }
-    }, [error])
+    },[error])
 
 
     const submitHandler = useCallback(async () => {
         // 提交 表单 用 async 实现 判断提交表单是否成功
         // useCallback确保这个方法不会在每次render的时候都被创建
         if (!formState.formIsValid) {
-            Alert.alert('Wrong Input!', 'Please check the error in the from', [
-                { text: 'Okey' }
-            ]);
+            Alert.alert('Wrong Input!', 'Please check the error in the from', [{ text: 'Okey' }])
             return;
         }
         setError(null);
@@ -133,14 +131,12 @@ const EditProductScreen = props => {
         try {
             if (editedProduct) {
                 // console.log("从formState中获得的value", formState.inputValues.title)
-                await dispatch(
-                    ProductsActions.updateProduct(
-                        prodId,
-                        formState.inputValues.title,
-                        formState.inputValues.description,
-                        formState.inputValues.imageUrl
-                    )
-                );
+                await dispatch(ProductsActions.updateProduct(
+                    prodId,
+                    formState.inputValues.title,
+                    formState.inputValues.description,
+                    formState.inputValues.imageUrl)
+                )
             } else {
                 await dispatch(
                     ProductsActions.createProduct(
@@ -157,8 +153,8 @@ const EditProductScreen = props => {
         }
 
         setIsLoading(false)
-
-    }, [dispatch, formState,prodId])
+      
+    }, [dispatch, formState.inputValues.imageUrl, formState.inputValues.title, formState.inputValues.description, formState.inputValues.price, prodId, formState.formIsValid])
 
 
     useEffect(() => {

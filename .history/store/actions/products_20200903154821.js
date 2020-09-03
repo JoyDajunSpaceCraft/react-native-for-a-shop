@@ -46,9 +46,6 @@ export const deleteProduct = productId => {
             `https://rn-complete-guide-d23c6.firebaseio.com/product/${productId}.json`, {
             method: 'DELETE',//DELETE 没有header和body
         });
-        if (!response.ok){
-            throw new Error("Something is wrong on delete!");
-        }
         const resData = await response.json();
         dispatch({
             type: DELETE_PRODUCT,
@@ -118,9 +115,6 @@ export const updateProduct = (id, title, description, imageUrl) => {
                 imageUrl
             })
         });
-        if (!response.ok){
-            throw new Error("Something is wrong on update!");
-        }
         dispatch({
             type: UPDATE_PRODUCT,
             pid: id,
@@ -136,6 +130,8 @@ export const updateProduct = (id, title, description, imageUrl) => {
             }
         })
     }
-    
+    if (!response.ok){
+        throw new Error("Something is wrong on update!");
+    }
 
 }; 

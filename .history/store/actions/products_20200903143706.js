@@ -42,13 +42,19 @@ export const deleteProduct = productId => {
     // };
     return async dispatch => {
         // 在delete之前send request
-        const response = await fetch(
-            `https://rn-complete-guide-d23c6.firebaseio.com/product/${productId}.json`, {
-            method: 'DELETE',//DELETE 没有header和body
+        const response = await fetch('https://rn-complete-guide-d23c6.firebaseio.com/product.json', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                // 将js转化为json 
+                title,
+                description,
+                imageUrl,
+                price
+            })
         });
-        if (!response.ok){
-            throw new Error("Something is wrong on delete!");
-        }
         const resData = await response.json();
         dispatch({
             type: DELETE_PRODUCT,
@@ -56,8 +62,6 @@ export const deleteProduct = productId => {
         });
     }
 };
-
-
 export const createProduct = (title, description, imageUrl, price) => {
     // return a promiss
     return async dispatch => {
@@ -102,7 +106,7 @@ export const createProduct = (title, description, imageUrl, price) => {
 export const updateProduct = (id, title, description, imageUrl) => {
 
 
-    const response = async dispatch => {
+    return async dispatch => {
         // update data 需要在写完之后点击 空白 才能保存 
         await fetch(
             // 要对js传入值时用``
@@ -118,9 +122,6 @@ export const updateProduct = (id, title, description, imageUrl) => {
                 imageUrl
             })
         });
-        if (!response.ok){
-            throw new Error("Something is wrong on update!");
-        }
         dispatch({
             type: UPDATE_PRODUCT,
             pid: id,
@@ -136,6 +137,5 @@ export const updateProduct = (id, title, description, imageUrl) => {
             }
         })
     }
-    
 
 }; 
