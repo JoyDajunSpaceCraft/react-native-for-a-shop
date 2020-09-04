@@ -22,16 +22,14 @@ const ProductsOverviewScreen = props => {
     const loadProduct = useCallback(async () => {
         // await等待dispatch结束 设置isLoading 为false
             setError(null);
-            // setIsLoading(true); 如果需要 pull to refresh 需要通过 isRefreshing 判断 是否加载成功
-            setIsRefreshing(true)
+            // setIsLoading(true); 如果需要 pull to refresh 需要通过 isLoading 判断 是否加载成功
+
             try {
                 await dispatch(productActions.fetchProducts())// 在主界面上加载全部数据 来自于action中 获得的fetchProduct
             } catch (err) {
-                setError(err.message);
+                setError(err)
             }
-
             // setIsLoading(false);
-            setIsRefreshing(false)
         }, [setError, setIsLoading]
     )
     useEffect(() => {
@@ -93,7 +91,7 @@ const ProductsOverviewScreen = props => {
     return (
         <FlatList
             onRefresh={loadProduct} // 实现pull to refresh 加载了 firebase中的 已有 product
-            refreshing={isRefreshing} // 告知React native 页面加载 什么时候结束 返回一个static variable
+            refreshing={isLoading} // 告知React native 什么时候结束 返回一个static variable
             data={products}
             keyExtractor={item => item.id}
             renderItem={itemData =>

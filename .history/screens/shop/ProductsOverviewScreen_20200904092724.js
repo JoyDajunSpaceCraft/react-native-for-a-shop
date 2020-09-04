@@ -93,7 +93,7 @@ const ProductsOverviewScreen = props => {
     return (
         <FlatList
             onRefresh={loadProduct} // 实现pull to refresh 加载了 firebase中的 已有 product
-            refreshing={isRefreshing} // 告知React native 页面加载 什么时候结束 返回一个static variable
+            refreshing={isRefreshing} // 告知React native 什么时候结束 返回一个static variable
             data={products}
             keyExtractor={item => item.id}
             renderItem={itemData =>

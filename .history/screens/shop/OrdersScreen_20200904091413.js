@@ -15,32 +15,32 @@ const OrderScreen = props => {
     const [error, setError] = useState();
     const dispatch = useDispatch();
 
-    // const loadOrder = useCallback(
-    //     async () => {
-    //         setError(null);
-    //         setIsLoading(true);
-    //         try {
-    //             await dispatch(orderActions.fetchOrders());
+    const loadOrder = useCallback(
+        async () => {
+            setError(null);
+            setIsLoading(true);
+            try {
+                await dispatch(orderActions.fetchOrders());
 
-    //         } catch (err) {
-    //             setError(err)
-    //         }
-    //         setIsLoading(false);
-    //     },
-    //     [setError, setIsLoading],
-    // )
+            } catch (err) {
+                setError(err)
+            }
+            setIsLoading(false);
+        },
+        [setError, setIsLoading],
+    )
 
-    // useEffect(() => {
-    //     loadOrder();
-    // }, [dispatch, loadOrder]);
+    useEffect(() => {
+        loadOrder();
+    }, [dispatch, loadOrder]);
 
     // 从 firebase中获取数据的另一种写法 
-    useEffect(()=>{
-        setIsLoading(true)
-        dispatch(orderActions.fetchOrders()).then(()=>{
-            setIsLoading(false)
-        });
-    },[dispatch, setIsLoading])
+    // useEffect(()=>{
+    //     setIsLoading(true)
+    //     dispatch(orderActions.fetchOrders()).then(()=>{
+    //         setIsLoading(false)
+    //     });
+    // },[dispatch, setIsLoading])
 
     if (isLoading) {
         return (

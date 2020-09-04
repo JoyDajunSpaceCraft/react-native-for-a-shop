@@ -1,57 +1,20 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, StyleSheet, FlatList, Platform, Text, ActivityIndicator } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, FlatList, Platform, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import OrderItem from '../../components/shop/OrderItem';
-import * as orderActions from '../../store/actions/orders';
-import Colors from '../../constants/Colors';
+import * as ordersActions from '../../store/actions'
 const OrderScreen = props => {
     //来源于 App.js中定义的orders orderReducer 和在reducers中定义的orders.js的initialState的order数组
     const orders = useSelector(state => state.orders.orders);
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState();
     const dispatch = useDispatch();
 
-    // const loadOrder = useCallback(
-    //     async () => {
-    //         setError(null);
-    //         setIsLoading(true);
-    //         try {
-    //             await dispatch(orderActions.fetchOrders());
+    useEffect(() =>{
 
-    //         } catch (err) {
-    //             setError(err)
-    //         }
-    //         setIsLoading(false);
-    //     },
-    //     [setError, setIsLoading],
-    // )
-
-    // useEffect(() => {
-    //     loadOrder();
-    // }, [dispatch, loadOrder]);
-
-    // 从 firebase中获取数据的另一种写法 
-    useEffect(()=>{
-        setIsLoading(true)
-        dispatch(orderActions.fetchOrders()).then(()=>{
-            setIsLoading(false)
-        });
-    },[dispatch, setIsLoading])
-
-    if (isLoading) {
-        return (
-            <View style={styles.centered}>
-                <ActivityIndicator
-                    size="large"
-                    color={Colors.primary}
-                />
-            </View>
-        )
-    }
+    })
     return <FlatList
         data={orders}
         keyExtractor={item => item.id}
@@ -100,13 +63,5 @@ OrderScreen.navigationOptions = navData => {
     }
 
 }
-
-const styles = StyleSheet.create({
-    centered: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
 
 export default OrderScreen;

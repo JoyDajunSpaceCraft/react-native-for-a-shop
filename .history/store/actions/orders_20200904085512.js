@@ -8,7 +8,7 @@ export const fetchOrders = () => {
         // any asyn code you want 
         try {
             const response = await fetch(
-                'https://rn-complete-guide-d23c6.firebaseio.com/order/u1.json');
+                'https://rn-complete-guide-d23c6.firebaseio.com/orders/u1.json');
             // GET 是默认方法所以不用 写method 而且不需要 header和body
 
             if (!response.ok) {

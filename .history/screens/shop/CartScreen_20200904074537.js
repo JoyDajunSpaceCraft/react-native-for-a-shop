@@ -30,7 +30,7 @@ const CartScreen = props => {
     });
 
     const sendOrderHandler = async () => {
-        // 异步操作 等待 dispatch中执行完成后再将 loading设置为false
+        // 异步操作
         setIsLoading(true)
         await dispatch(orderActions.addOrder(cartItem, cartTotalAmount))//虽然和redux中的定义数组不一样但是可以执行 
         setIsLoading(false)

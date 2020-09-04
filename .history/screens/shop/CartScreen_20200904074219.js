@@ -30,7 +30,6 @@ const CartScreen = props => {
     });
 
     const sendOrderHandler = async () => {
-        // 异步操作 等待 dispatch中执行完成后再将 loading设置为false
         setIsLoading(true)
         await dispatch(orderActions.addOrder(cartItem, cartTotalAmount))//虽然和redux中的定义数组不一样但是可以执行 
         setIsLoading(false)
@@ -46,13 +45,12 @@ const CartScreen = props => {
                     </Text>
                 </Text>
                 {/* 当isLoading 是true时 */}
-                {isLoading ? <ActivityIndicator size="small" color={Colors.primary}/> 
-                :(<Button
+                {isLoading ? <ActivityIndicator size="small"/>}
+                <Button
                     color={Colors.accent}
                     title="Order Now"
                     disabled={cartItem.length === 0} //如果是$0 说明不需要结算 disabled方法返回true时不执行 
-                    onPress={sendOrderHandler} />)}
-                
+                    onPress={} />
             </Card>
             <FlatList
                 data={cartItem}

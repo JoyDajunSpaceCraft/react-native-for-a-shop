@@ -1,4 +1,4 @@
-import { ADD_ORDER,SET_ORDERS } from '../actions/orders';
+import { ADD_ORDER } from '../actions/orders';
 import Order from '../../models/order';
 
 const initialState = {
@@ -12,16 +12,12 @@ export default (state = initialState, action) => {
                 // new Date().toString(),  //对应的是order-model中的 id
                 action.orderData.items, // item
                 action.orderData.amount, // total amount
-                action.orderData.date
+                new Date()
             );//date
             return {
                 ...state,//即使现在copy一份是redundant多余的 但是要保证已经copy了
                 orders: state.orders.concat(newOrder)
             };
-        case SET_ORDERS:
-            return {
-                orders:action.orders//为什么直接就返回了orders因为在action中loadOrders数组已经将所有参数传入
-            }
     }
     return state;
 }

@@ -18,10 +18,6 @@ export default (state = initialState, action) => {
                 ...state,//即使现在copy一份是redundant多余的 但是要保证已经copy了
                 orders: state.orders.concat(newOrder)
             };
-        case SET_ORDERS:
-            return {
-                orders:action.orders//为什么直接就返回了orders因为在action中loadOrders数组已经将所有参数传入
-            }
     }
     return state;
 }

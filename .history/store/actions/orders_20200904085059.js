@@ -3,12 +3,11 @@ export const ADD_ORDER = 'ADD_ORDER';
 export const SET_ORDERS = 'SET_ORDERS';// 实现order 的fetch
 
 export const fetchOrders = () => {
-    // 显示在 OrdersScreen界面的 返回的就是orders 
     return async dispatch => {
         // any asyn code you want 
         try {
             const response = await fetch(
-                'https://rn-complete-guide-d23c6.firebaseio.com/order/u1.json');
+                'https://rn-complete-guide-d23c6.firebaseio.com/orders/u1.json');
             // GET 是默认方法所以不用 写method 而且不需要 header和body
 
             if (!response.ok) {
@@ -24,13 +23,13 @@ export const fetchOrders = () => {
                         key,
                         resData[key].cartItems,
                         resData[key].totalAmount,
-                        new Date(resData[key].date)//因为 resData[key].date是string 所以这里设置为 new Date 转换为 object
+                        new Date(resData[key].date)//因为 resData[key].date是string 所以这里设置为 new Date
                     )
                 )
             }
             dispatch({
                 type: SET_ORDERS,
-                orders:loadedOrders
+                orders:
             });
         } catch (err) {
             throw err;

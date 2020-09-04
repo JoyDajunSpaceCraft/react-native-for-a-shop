@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
             };
         case SET_ORDERS:
             return {
-                orders:action.orders//为什么直接就返回了orders因为在action中loadOrders数组已经将所有参数传入
+                orders:action.orders
             }
     }
     return state;

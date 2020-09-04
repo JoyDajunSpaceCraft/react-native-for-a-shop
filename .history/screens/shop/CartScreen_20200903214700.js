@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FlatList, View, StyleSheet, Button, Text, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { FlatList, View, StyleSheet, Button, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Colors from '../../constants/Colors';
@@ -9,8 +9,6 @@ import * as orderActions from '../../store/actions/orders';
 import Card from '../../components/UI/Card';
 
 const CartScreen = props => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState();
     //来源于 App.js中定义的rootReducers 以及在reducers/cart中的totalAmount获取每一个toCart之后商品价格
     const cartTotalAmount = useSelector(state => state.cart.totalAmount);
     const cartItem = useSelector(state => {
@@ -26,14 +24,13 @@ const CartScreen = props => {
                 sum: state.cart.items[key].sum
             })
         }
-        return transformedCartItems.sort((a, b) => a.productId > b.productId ? 1 : -1)
+        return transformedCartItems.sort((a,b)=> a.productId >b.productId ? 1:-1)
     });
 
-    const sendOrderHandler = async () => {
-        // 异步操作 等待 dispatch中执行完成后再将 loading设置为false
-        setIsLoading(true)
-        await dispatch(orderActions.addOrder(cartItem, cartTotalAmount))//虽然和redux中的定义数组不一样但是可以执行 
-        setIsLoading(false)
+    const sentOrderHandler =async()=>{
+        
+            dispatch(orderActions.addOrder(cartItem,cartTotalAmount))//虽然和redux中的定义数组不一样但是可以执行 
+        
     }
     const dispatch = useDispatch();
     return (
@@ -41,33 +38,29 @@ const CartScreen = props => {
             <Card style={styles.summary}>
                 <Text style={styles.summaryText}> Total :
                      <Text style={styles.amount}>
-                        {/* 为了确保最后不出现负号 */}
-                         ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
+                         {/* 为了确保最后不出现负号 */}
+                         ${Math.round(cartTotalAmount.toFixed(2) *100) / 100}
                     </Text>
                 </Text>
-                {/* 当isLoading 是true时 */}
-                {isLoading ? <ActivityIndicator size="small" color={Colors.primary}/> 
-                :(<Button
+                <Button
                     color={Colors.accent}
                     title="Order Now"
                     disabled={cartItem.length === 0} //如果是$0 说明不需要结算 disabled方法返回true时不执行 
-                    onPress={sendOrderHandler} />)}
-                
+                    onPress={} />
             </Card>
             <FlatList
                 data={cartItem}
                 keyExtractor={item => item.productId}
                 renderItem={
                     itemData =>
-                        <CartItem
-                            deleteAble//只要摆一个？？
-                            quantity={itemData.item.quantity}
-                            title={itemData.item.productTitle}
-                            amount={itemData.item.sum}
-                            onRemove={() => {
-                                dispatch(cartActions.removeFromCart(itemData.item.productId))
-                            }}
-                        />
+                     <CartItem
+                        deleteAble//只要摆一个？？
+                        quantity={itemData.item.quantity}
+                        title={itemData.item.productTitle}
+                        amount={itemData.item.sum}
+                        onRemove={() =>{
+                            dispatch(cartActions.removeFromCart(itemData.item.productId))}}
+                    />
                 }
             />
 
@@ -85,7 +78,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginBottom: 20,//为了FlatList准备
         padding: 10,
-
+       
     },
     summaryText: {
         fontFamily: 'open-sans-bold',
@@ -97,6 +90,6 @@ const styles = StyleSheet.create({
 });
 
 CartScreen.navigationOptions = {
-    headerTitle: 'Your Carts'
+    headerTitle:'Your Carts'
 }
 export default CartScreen;

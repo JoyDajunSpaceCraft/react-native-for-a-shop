@@ -10,8 +10,7 @@ export const fetchProducts = () => {
     return async dispatch => {
         // any asyn code you want 
         try {
-            const response = await fetch(
-                'https://rn-complete-guide-d23c6.firebaseio.com/product.json');
+            const response = await fetch('https://rn-complete-guide-d23c6.firebaseio.com/product.json');
             // GET 是默认方法所以不用 写method 而且不需要 header和body
 
             if (!response.ok) {
@@ -144,4 +143,6 @@ export const updateProduct = (id, title, description, imageUrl) => {
             }
         })
     }
+
+
 }; 

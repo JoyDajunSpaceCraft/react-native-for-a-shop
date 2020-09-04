@@ -15,33 +15,30 @@ const ProductsOverviewScreen = props => {
     const dispatch = useDispatch(); // useDispatch from redux
 
     const [isLoading, setIsLoading] = useState(false); //设置loading spinner
-    const [isRefreshing, setIsRefreshing] = useState(false);// 和isLoading效果相同 适用于 pull to refresh
     const [error, setError] = useState();// initially undefine
 
     // useCallback 是在使用 useEffect 实现 方法时 会产生infinit loop 所以加在useEffect 调用的方法上的
     const loadProduct = useCallback(async () => {
         // await等待dispatch结束 设置isLoading 为false
             setError(null);
-            // setIsLoading(true); 如果需要 pull to refresh 需要通过 isRefreshing 判断 是否加载成功
-            setIsRefreshing(true)
+            // setIsLoading(true); 如果需要 pull to refresh 需要通过 isLoading 判断 是否加载成功
+
             try {
                 await dispatch(productActions.fetchProducts())// 在主界面上加载全部数据 来自于action中 获得的fetchProduct
             } catch (err) {
-                setError(err.message);
+                setError(err)
             }
-
             // setIsLoading(false);
-            setIsRefreshing(false)
         }, [setError, setIsLoading]
     )
     useEffect(() => {
         setIsLoading(true);
         // 尽管已经将data再次渲染于下一个useEffect 但如果不加上这个useEffct 还是会无法渲染fireBase中的数据
         loadProduct().then(() =>{
-            setIsLoading(false);
+            setIsLoading(false)
         });// 因为async不能直接用在useEffect上 因为asycn 返回的是一个promiss
         
-    }, [dispatch, loadProduct, setIsLoading]);
+    }, [dispatch, loadProduct]);
 
     useEffect(() =>{
         // 为了使加载到这个页面中的内容实现再次渲染 而不是不再recreate 不太懂！！！
@@ -93,7 +90,7 @@ const ProductsOverviewScreen = props => {
     return (
         <FlatList
             onRefresh={loadProduct} // 实现pull to refresh 加载了 firebase中的 已有 product
-            refreshing={isRefreshing} // 告知React native 页面加载 什么时候结束 返回一个static variable
+            refreshing={isLoading} // 告知React native 什么时候结束 返回一个static variable
             data={products}
             keyExtractor={item => item.id}
             renderItem={itemData =>

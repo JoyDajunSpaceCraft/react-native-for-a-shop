@@ -27,7 +27,7 @@ const ProductsOverviewScreen = props => {
             try {
                 await dispatch(productActions.fetchProducts())// 在主界面上加载全部数据 来自于action中 获得的fetchProduct
             } catch (err) {
-                setError(err.message);
+                setError(err.message)
             }
 
             // setIsLoading(false);
@@ -93,7 +93,7 @@ const ProductsOverviewScreen = props => {
     return (
         <FlatList
             onRefresh={loadProduct} // 实现pull to refresh 加载了 firebase中的 已有 product
-            refreshing={isRefreshing} // 告知React native 页面加载 什么时候结束 返回一个static variable
+            refreshing={isLoading} // 告知React native 什么时候结束 返回一个static variable
             data={products}
             keyExtractor={item => item.id}
             renderItem={itemData =>
