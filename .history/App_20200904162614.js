@@ -17,7 +17,7 @@ import productReducer from './store/reducers/products';
 import ShopNavigator from './navigation/ShopNavigator';
 import cartReducer from './store/reducers/cart';
 import orderReducer from './store/reducers/orders';
-import authReducer from './store/reducers/auth';
+import authReducer from './store/reducers/auth'
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -29,8 +29,7 @@ const fetchFonts = () => {
 const rootReducer = combineReducers({
   products: productReducer,
   cart:cartReducer,
-  orders:orderReducer,
-  auth:authReducer
+  orders:orderReducer
 })
 // ,composeWithDevTools() 这个是test时需要加到createStore上的
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk)); 

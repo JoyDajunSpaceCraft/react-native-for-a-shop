@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Platform, Button, Alert, View, Text } from 'react-native';
+import { FlatList, Platform, Button, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
@@ -38,8 +38,8 @@ const UserProductsScreen = props => {
     }
 
     if(userProducts.length === 0){
-        return <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-            <Text>No order, please add some</Text>
+        return <View>
+            <Text>No product, please add some</Text>
         </View>
     }
 

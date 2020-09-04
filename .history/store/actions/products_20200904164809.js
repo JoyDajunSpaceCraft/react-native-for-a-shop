@@ -7,8 +7,7 @@ export const SET_PRODUCTS = 'SET_PRODUCTS';
 
 export const fetchProducts = () => {
     // 反应到 product over view 上面的方法
-    return async (dispatch,getState )=> {
-        const userId = getState().auth.userId;
+    return async dispatch => {
         // any asyn code you want 
         try {
             const response = await fetch(
@@ -36,9 +35,7 @@ export const fetchProducts = () => {
             // console.log(resData)
             dispatch({
                 // 这里dispatch相当于 return 值了 只是来源于 firebase
-                type: SET_PRODUCTS, 
-                products: loadedProducts,
-                userProducts:loadedProducts.filter(prod =>prod.ownerId === userId)
+                type: SET_PRODUCTS, products: loadedProducts
             });
         }
         catch (error) {
@@ -53,11 +50,10 @@ export const deleteProduct = productId => {
     //     type: DELETE_PRODUCT,
     //     pid: productId
     // };
-    return async (dispatch, getState) => {
-        const token = getState().auth.token;
+    return async dispatch => {
         // 在delete之前send request
         const response = await fetch(
-            `https://rn-complete-guide-d23c6.firebaseio.com/product/${productId}.json?auth=${token}`, {
+            `https://rn-complete-guide-d23c6.firebaseio.com/product/${productId}.json`, {
             method: 'DELETE',//DELETE 没有header和body
         });
         if (!response.ok) {
@@ -76,10 +72,9 @@ export const createProduct = (title, description, imageUrl, price) => {
     // return a promiss
     return async (dispatch,getState) => {
         const token = getState().auth.token;
-        const ownerId = getState().auth.userId;
         // any asyn code you want 
         const response = await fetch(
-            `https://rn-complete-guide-d23c6.firebaseio.com/product.json?auth=${token}`, {
+            `https://rn-complete-guide-d23c6.firebaseio.com/product.json?access_token=${token}`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -89,8 +84,7 @@ export const createProduct = (title, description, imageUrl, price) => {
                 title,
                 description,
                 imageUrl,
-                price,
-                ownerId
+                price
             })
         });
         const resData = await response.json();
@@ -109,8 +103,7 @@ export const createProduct = (title, description, imageUrl, price) => {
                 title,
                 description,
                 imageUrl,
-                price,
-                ownerId
+                price
             }
         }
         )
@@ -125,7 +118,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
         // update data 需要在写完之后点击 空白 才能保存 
         const response = await fetch(
             // 要对js传入值时用``
-            `https://rn-complete-guide-d23c6.firebaseio.com/product/${id}.json?auth=${token}`, // 因为在firebase中设置读写权限 因为默认只给了 read权限
+            `https://rn-complete-guide-d23c6.firebaseio.com/product/${id}.json?access_token=${token}`, // 因为在firebase中设置读写权限 因为默认只给了 read权限
             // 所以 需要加入token 才能 实现修改
             {
                 method: 'PATCH',// PUT fully overwrite , PATCH update place where you tell the data

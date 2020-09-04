@@ -26,7 +26,7 @@ export const fetchProducts = () => {
                 loadedProducts.push(
                     new Product(
                         key,
-                        'u1',
+                        ownerId,
                         resData[key].title,
                         resData[key].imageUrl,
                         resData[key].description,
@@ -38,7 +38,7 @@ export const fetchProducts = () => {
                 // 这里dispatch相当于 return 值了 只是来源于 firebase
                 type: SET_PRODUCTS, 
                 products: loadedProducts,
-                userProducts:loadedProducts.filter(prod =>prod.ownerId === userId)
+                userProducts:loadedProducts.filter(prod =>prod.ownerId === userId);
             });
         }
         catch (error) {

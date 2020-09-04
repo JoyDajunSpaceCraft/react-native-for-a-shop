@@ -4,12 +4,11 @@ export const SET_ORDERS = 'SET_ORDERS';// 实现order 的fetch
 
 export const fetchOrders = () => {
     // 显示在 OrdersScreen界面的 返回的就是orders 
-    return async( dispatch , getState)=> {
+    return async dispatch => {
         // any asyn code you want 
-        const userId = getState().auth.userId;
         try {
             const response = await fetch(
-                `https://rn-complete-guide-d23c6.firebaseio.com/order/${userId}.json`);
+                'https://rn-complete-guide-d23c6.firebaseio.com/order/u1.json');
             // GET 是默认方法所以不用 写method 而且不需要 header和body
 
             if (!response.ok) {
@@ -45,7 +44,7 @@ export const addOrder = (cartItems, totalAmount) => {
         const token = getState().auth.token;
         const userId = getState().auth.userId;
         const response = await fetch(
-            `https://rn-complete-guide-d23c6.firebaseio.com/order/${userId}.json?auth=${token}`, {
+            `https://rn-complete-guide-d23c6.firebaseio.com/order/u1.json?auth=${token}`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'

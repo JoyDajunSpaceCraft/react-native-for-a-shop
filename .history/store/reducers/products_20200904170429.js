@@ -8,10 +8,8 @@ import {
 import Product from '../../models/product';
 
 const initialState = {
-    // availableProducts: [PRODUCTS],
-    // userProducts: PRODUCTS.filter(prod => prod.ownerId === 'u1')
-    availableProducts:[],
-    userProducts:[]
+    availableProducts: [],
+    userProducts: []
 };
 export default (state = initialState, action) => {
      

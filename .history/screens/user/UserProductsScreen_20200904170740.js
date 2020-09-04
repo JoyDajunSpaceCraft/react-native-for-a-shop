@@ -39,7 +39,7 @@ const UserProductsScreen = props => {
 
     if(userProducts.length === 0){
         return <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-            <Text>No order, please add some</Text>
+            <Text>No product, please add some</Text>
         </View>
     }
 

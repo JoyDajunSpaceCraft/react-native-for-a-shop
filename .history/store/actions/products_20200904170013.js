@@ -8,7 +8,7 @@ export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const fetchProducts = () => {
     // 反应到 product over view 上面的方法
     return async (dispatch,getState )=> {
-        const userId = getState().auth.userId;
+        const ownerId = getState().auth.userId
         // any asyn code you want 
         try {
             const response = await fetch(
@@ -36,9 +36,7 @@ export const fetchProducts = () => {
             // console.log(resData)
             dispatch({
                 // 这里dispatch相当于 return 值了 只是来源于 firebase
-                type: SET_PRODUCTS, 
-                products: loadedProducts,
-                userProducts:loadedProducts.filter(prod =>prod.ownerId === userId)
+                type: SET_PRODUCTS, products: loadedProducts
             });
         }
         catch (error) {

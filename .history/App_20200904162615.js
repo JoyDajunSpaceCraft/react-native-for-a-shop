@@ -29,8 +29,7 @@ const fetchFonts = () => {
 const rootReducer = combineReducers({
   products: productReducer,
   cart:cartReducer,
-  orders:orderReducer,
-  auth:authReducer
+  orders:orderReducer
 })
 // ,composeWithDevTools() 这个是test时需要加到createStore上的
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk)); 

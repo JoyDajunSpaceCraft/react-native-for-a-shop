@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback, useState, useEffect } from 'react';
+import React, { useReducer, useCallback, useState,useEffect } from 'react';
 import {
     ScrollView,
     View,
@@ -84,32 +84,32 @@ const AuthScreen = props => {
 
     const inputChangeHandler = useCallback(
         (inputIdentifier, inputValue, inputValidity) => {
-            // useReducer用来处理 dispatch的地方
-            // let isValid = false
-            // if (text.trim().length > 0) {
-            //     // trim()删除了空格
-            //     // setTitleIsValid(false);
-            //     isValid = true
-            // }
-            // else {
-            // setTitleIsValid(true);
-            // }
-            // setTitle(text);
-            dispatchFormState({
-                // 来源于 初始化的 useReducer 改变state
-                type: FORM_INPUT_UPDATE, // dispatch什么样的方法
-                value: inputValue, // 传入输入值
-                isValid: inputValidity,//判断输入的值是否能用
-                input: inputIdentifier  // 什么样会trigger这个dispatch
-            })
-        }, [dispatchFormState])
+        // useReducer用来处理 dispatch的地方
+        // let isValid = false
+        // if (text.trim().length > 0) {
+        //     // trim()删除了空格
+        //     // setTitleIsValid(false);
+        //     isValid = true
+        // }
+        // else {
+        // setTitleIsValid(true);
+        // }
+        // setTitle(text);
+        dispatchFormState({
+            // 来源于 初始化的 useReducer 改变state
+            type: FORM_INPUT_UPDATE, // dispatch什么样的方法
+            value: inputValue, // 传入输入值
+            isValid: inputValidity,//判断输入的值是否能用
+            input: inputIdentifier  // 什么样会trigger这个dispatch
+        })
+    }, [dispatchFormState])
 
 
-    useEffect(() => {
-        if (error) {// 这个error来源于 auth 里面 throw的new error
-            Alert.alert("An Error occurred", error, [{ text: "Okey" }])
+    useEffect(()=>{
+        if(error){// 这个error来源于 auth 里面 throw的new error
+            Alert.alert("An Error occurred",error, [{text:"Okey"}])
         }
-    }, [error])
+    },[error])
 
     const authHandler = async () => {
         let action;
@@ -124,14 +124,13 @@ const AuthScreen = props => {
         }
         setIsError(null);
         setIsLoading(true);
-        try {
+        try{
             await dispatch(action);
             props.navigation.navigate('Shop');
-        } catch (err) {
-            setIsError(err.message);
-            setIsLoading(false);
-
+        }catch(err){
+            setIsError(err.message)
         }
+        setIsLoading(false);
     }
     return (
         <KeyboardAvoidingView
@@ -168,12 +167,12 @@ const AuthScreen = props => {
                         />
                         {/* 转换model的形式！！！ */}
                         <View style={styles.buttonContainer}>
-                            {isLoading ? <ActivityIndicator size='small' color={Colors.primary} />
-                                : <Button
+                            {isLoading?<ActivityIndicator size='small' color={Colors.primary}/>
+                            :<Button
                                     title={isSignup ? "Sign up" : "Login"}
                                     color={Colors.primary}
                                     onPress={authHandler} />}
-
+                            
                         </View>
                         <View style={styles.buttonContainer}>
                             <Button

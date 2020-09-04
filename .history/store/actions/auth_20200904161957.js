@@ -91,7 +91,7 @@ export const login = (email, password) => {
             }
             throw new Error(message); // 这里的error传到AuthScreen 中 setIsError(err.message)
         }
-        const resData = await response.json();
+        resData = await response.json();
         dispatch({ type: LOGIN ,token:resData.idToken, userId:resData.localId})
     }
 }

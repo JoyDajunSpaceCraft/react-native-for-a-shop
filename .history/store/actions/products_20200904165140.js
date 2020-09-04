@@ -7,8 +7,7 @@ export const SET_PRODUCTS = 'SET_PRODUCTS';
 
 export const fetchProducts = () => {
     // 反应到 product over view 上面的方法
-    return async (dispatch,getState )=> {
-        const userId = getState().auth.userId;
+    return async dispatch => {
         // any asyn code you want 
         try {
             const response = await fetch(
@@ -36,9 +35,7 @@ export const fetchProducts = () => {
             // console.log(resData)
             dispatch({
                 // 这里dispatch相当于 return 值了 只是来源于 firebase
-                type: SET_PRODUCTS, 
-                products: loadedProducts,
-                userProducts:loadedProducts.filter(prod =>prod.ownerId === userId)
+                type: SET_PRODUCTS, products: loadedProducts
             });
         }
         catch (error) {
@@ -76,7 +73,6 @@ export const createProduct = (title, description, imageUrl, price) => {
     // return a promiss
     return async (dispatch,getState) => {
         const token = getState().auth.token;
-        const ownerId = getState().auth.userId;
         // any asyn code you want 
         const response = await fetch(
             `https://rn-complete-guide-d23c6.firebaseio.com/product.json?auth=${token}`, {
@@ -89,8 +85,7 @@ export const createProduct = (title, description, imageUrl, price) => {
                 title,
                 description,
                 imageUrl,
-                price,
-                ownerId
+                price
             })
         });
         const resData = await response.json();
@@ -109,8 +104,7 @@ export const createProduct = (title, description, imageUrl, price) => {
                 title,
                 description,
                 imageUrl,
-                price,
-                ownerId
+                price
             }
         }
         )
