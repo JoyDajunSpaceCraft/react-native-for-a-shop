@@ -5,5 +5,5 @@ npm install --save redux react-redux react-navigation react-navigation-header-bu
 expo install react-native-gesture-handler react-native-reanimated
 npm install --save expo-font
 npm install --save validate.js // judge the email etc.
-npm install --save redux-thunk // import midwire>
+npm install --save redux-thunk // import midwire
 ```
