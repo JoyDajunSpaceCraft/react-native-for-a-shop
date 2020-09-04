@@ -92,13 +92,11 @@ const shopNavigator = createDrawerNavigator({
 
 const AuthNavigator = createSwitchNavigator({
     Auth:AuthScreen,// Auth 作为第一个screen
-},
-{
-    defaultNavigationOptions:defaultNavOptions
 });
 const MainNavigator = createSwitchNavigator({
     Auth:AuthNavigator,
     shop:shopNavigator
+
 })
 
 export default createAppContainer(MainNavigator)

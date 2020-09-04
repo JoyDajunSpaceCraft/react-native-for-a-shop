@@ -12,9 +12,7 @@ import CartScreen from '../screens/shop/CartScreen';
 import OrdersScreen from '../screens/shop/OrdersScreen';
 import UserProductsScreen from '../screens/user/UserProductsScreen';
 import EditProductScreen from '../screens/user/EditProductScreen';
-import AuthScreen from '../screens/user/AuthScreen';
 import Colors from '../constants/Colors';
-
 
 const defaultNavOptions = {
     // extract defaultNavigationOptions 
@@ -90,15 +88,4 @@ const shopNavigator = createDrawerNavigator({
     }
 })
 
-const AuthNavigator = createSwitchNavigator({
-    Auth:AuthScreen,// Auth 作为第一个screen
-},
-{
-    defaultNavigationOptions:defaultNavOptions
-});
-const MainNavigator = createSwitchNavigator({
-    Auth:AuthNavigator,
-    shop:shopNavigator
-})
-
-export default createAppContainer(MainNavigator)
+export default createAppContainer(shopNavigator)

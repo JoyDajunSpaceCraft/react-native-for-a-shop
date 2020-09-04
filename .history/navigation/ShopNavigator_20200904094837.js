@@ -1,5 +1,5 @@
 import React from 'react'; // 因为使用了 <Ionicon>这样的jsx需要加上React的依赖
-import { createAppContainer, createSwitchNavigator } from 'react-navigation'; // createSwitchNavigator 针对 登录界面的 nav 一旦登录到这个界面 之后就不会返回这个界面
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';//npm install --save react-navigation-drawer
 // import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -12,9 +12,7 @@ import CartScreen from '../screens/shop/CartScreen';
 import OrdersScreen from '../screens/shop/OrdersScreen';
 import UserProductsScreen from '../screens/user/UserProductsScreen';
 import EditProductScreen from '../screens/user/EditProductScreen';
-import AuthScreen from '../screens/user/AuthScreen';
 import Colors from '../constants/Colors';
-
 
 const defaultNavOptions = {
     // extract defaultNavigationOptions 
@@ -90,15 +88,4 @@ const shopNavigator = createDrawerNavigator({
     }
 })
 
-const AuthNavigator = createSwitchNavigator({
-    Auth:AuthScreen,// Auth 作为第一个screen
-},
-{
-    defaultNavigationOptions:defaultNavOptions
-});
-const MainNavigator = createSwitchNavigator({
-    Auth:AuthNavigator,
-    shop:shopNavigator
-})
-
-export default createAppContainer(MainNavigator)
+export default createAppContainer(shopNavigator)
