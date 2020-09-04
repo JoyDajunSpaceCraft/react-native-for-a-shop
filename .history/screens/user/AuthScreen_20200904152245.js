@@ -58,7 +58,7 @@ const formReducer = (state, action) => {
 const AuthScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [isSignup, setIsSignup] = useState(false);// 判断是否是signup
-    const [error, setIsError] = useState();
+    const [isError, setIsError] = useState();
 
     const dispatch = useDispatch();
     const [formState, dispatchFormState] = useReducer(// 初始化 类似于useState用法
@@ -195,6 +195,7 @@ AuthScreen.navigationOptions = {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+
     },
     gradient: {
         flex: 1,

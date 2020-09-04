@@ -195,6 +195,7 @@ AuthScreen.navigationOptions = {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+
     },
     gradient: {
         flex: 1,

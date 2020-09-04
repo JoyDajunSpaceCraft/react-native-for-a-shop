@@ -58,7 +58,7 @@ const formReducer = (state, action) => {
 const AuthScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [isSignup, setIsSignup] = useState(false);// 判断是否是signup
-    const [error, setIsError] = useState();
+    const [isError, setIsError] = useState();
 
     const dispatch = useDispatch();
     const [formState, dispatchFormState] = useReducer(// 初始化 类似于useState用法
@@ -82,8 +82,7 @@ const AuthScreen = props => {
     );
 
 
-    const inputChangeHandler = useCallback(
-        (inputIdentifier, inputValue, inputValidity) => {
+    const inputChangeHandler = useCallback((inputIdentifier, inputValue, inputValidity) => {
         // useReducer用来处理 dispatch的地方
         // let isValid = false
         // if (text.trim().length > 0) {
@@ -105,12 +104,6 @@ const AuthScreen = props => {
     }, [dispatchFormState])
 
 
-    useEffect(()=>{
-        if(error){// 这个error来源于 auth 里面 throw的new error
-            Alert.alert("An Error occurred",error, [{text:"Okey"}])
-        }
-    },[error])
-
     const authHandler = async () => {
         let action;
         if (isSignup) {// 一开始是 sign up 也就是没有注册过的情况
@@ -130,6 +123,7 @@ const AuthScreen = props => {
             setIsError(err.message)
         }
         setIsLoading(false);
+
     }
     return (
         <KeyboardAvoidingView
@@ -182,6 +176,7 @@ const AuthScreen = props => {
                                 }}
                             />
                         </View>
+
                     </ScrollView>
                 </Cart>
             </LinearGradient>
@@ -195,6 +190,7 @@ AuthScreen.navigationOptions = {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+
     },
     gradient: {
         flex: 1,

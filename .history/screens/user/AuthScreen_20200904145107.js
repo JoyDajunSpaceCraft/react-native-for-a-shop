@@ -1,12 +1,10 @@
-import React, { useReducer, useCallback, useState,useEffect } from 'react';
+import React, { useReducer, useCallback, useState } from 'react';
 import {
     ScrollView,
     View,
     Button,
     KeyboardAvoidingView,
-    StyleSheet,
-    ActivityIndicator,
-    Alert
+    StyleSheet
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient' //npm install --save expo-linear-gradient  实现 线性的颜色变换
 import { useDispatch } from 'react-redux';
@@ -56,9 +54,7 @@ const formReducer = (state, action) => {
 }
 
 const AuthScreen = props => {
-    const [isLoading, setIsLoading] = useState(false);
     const [isSignup, setIsSignup] = useState(false);// 判断是否是signup
-    const [error, setIsError] = useState();
 
     const dispatch = useDispatch();
     const [formState, dispatchFormState] = useReducer(// 初始化 类似于useState用法
@@ -82,8 +78,7 @@ const AuthScreen = props => {
     );
 
 
-    const inputChangeHandler = useCallback(
-        (inputIdentifier, inputValue, inputValidity) => {
+    const inputChangeHandler = useCallback((inputIdentifier, inputValue, inputValidity) => {
         // useReducer用来处理 dispatch的地方
         // let isValid = false
         // if (text.trim().length > 0) {
@@ -105,31 +100,23 @@ const AuthScreen = props => {
     }, [dispatchFormState])
 
 
-    useEffect(()=>{
-        if(error){// 这个error来源于 auth 里面 throw的new error
-            Alert.alert("An Error occurred",error, [{text:"Okey"}])
-        }
-    },[error])
-
-    const authHandler = async () => {
+    const authHandler = () => {
         let action;
         if (isSignup) {// 一开始是 sign up 也就是没有注册过的情况
-            action = authActions.signup(
-                formState.inputValues.email,
-                formState.inputValues.password)
+            dispatch(
+                authActions.signup(
+                    formState.inputValues.email,
+                    formState.inputValues.password)
+            );
         } else {
-            action = authActions.login(
+
+        }
+        dispatch(
+            authActions.signup(
                 formState.inputValues.email,
                 formState.inputValues.password)
-        }
-        setIsError(null);
-        setIsLoading(true);
-        try{
-            await dispatch(action);
-        }catch(err){
-            setIsError(err.message)
-        }
-        setIsLoading(false);
+        );
+
     }
     return (
         <KeyboardAvoidingView
@@ -166,12 +153,10 @@ const AuthScreen = props => {
                         />
                         {/* 转换model的形式！！！ */}
                         <View style={styles.buttonContainer}>
-                            {isLoading?<ActivityIndicator size='small' color={Colors.primary}/>
-                            :<Button
-                                    title={isSignup ? "Sign up" : "Login"}
-                                    color={Colors.primary}
-                                    onPress={authHandler} />}
-                            
+                            <Button
+                                title={isSignup ? "Sign up" : "Login"}
+                                color={Colors.primary}
+                                onPress={authHandler} />
                         </View>
                         <View style={styles.buttonContainer}>
                             <Button
@@ -182,6 +167,7 @@ const AuthScreen = props => {
                                 }}
                             />
                         </View>
+
                     </ScrollView>
                 </Cart>
             </LinearGradient>
@@ -195,6 +181,7 @@ AuthScreen.navigationOptions = {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+
     },
     gradient: {
         flex: 1,

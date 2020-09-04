@@ -1,15 +1,13 @@
-import React, { useReducer, useCallback, useState,useEffect } from 'react';
+import React from 'react';
 import {
     ScrollView,
     View,
     Button,
     KeyboardAvoidingView,
-    StyleSheet,
-    ActivityIndicator,
-    Alert
+    StyleSheet
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient' //npm install --save expo-linear-gradient  实现 线性的颜色变换
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 
 import Input from '../../components/UI/Input';
@@ -18,7 +16,6 @@ import Colors from '../../constants/Colors';
 import * as authActions from '../../store/actions/auth';
 
 
-const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
 const formReducer = (state, action) => {
     // 初始化的 state 是 由useReducer中的formState定义的
@@ -34,6 +31,7 @@ const formReducer = (state, action) => {
             //根据 已有的 action的input 也就是dispatchFormState中的 inputIdentifier 确定 
             //在修改了 value也就是用户的输入值
         };
+        console.log("update value 之后的", updateValues)
 
         const updateInputValidaties = {
             // 在原有的  inputValues基础上加上了  dispatchFormState新添加的 value
@@ -49,6 +47,7 @@ const formReducer = (state, action) => {
             inputValues: updateValues,
             inputValidities: updateInputValidaties
         }
+        console.log("最后的return", returnval.inputValues)
 
         return returnval;
     }
@@ -56,10 +55,6 @@ const formReducer = (state, action) => {
 }
 
 const AuthScreen = props => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [isSignup, setIsSignup] = useState(false);// 判断是否是signup
-    const [error, setIsError] = useState();
-
     const dispatch = useDispatch();
     const [formState, dispatchFormState] = useReducer(// 初始化 类似于useState用法
         // formState 是所有的键入按钮状态 每次有修改 就会重新加载EditProductScreen 赋予新的state 
@@ -70,66 +65,25 @@ const AuthScreen = props => {
         formReducer,//传入的方法怎样update
         {
             inputValues: {
-                email: '',
-                password: ''
+                //代替了 设置state的方法
+                title: editedProduct ? editedProduct.title : '',
+                imageUrl: editedProduct ? editedProduct.imageUrl : '',
+                description: editedProduct ? editedProduct.description : '',
+                price: '' // 只要不是新建一个商品的情况下 price 始终设置为空
             },
             inputValidities: {
-                email: false,
-                password: false
+                title: editedProduct ? true : false,
+                imageUrl: editedProduct ? true : false,
+                description: editedProduct ? true : false,
+                price: editedProduct ? true : false,//price可以在edit已有商品时设置validation为true
             },
-            formIsValid: false
+            formIsValid: editedProduct ? true : false
         }
     );
 
 
-    const inputChangeHandler = useCallback(
-        (inputIdentifier, inputValue, inputValidity) => {
-        // useReducer用来处理 dispatch的地方
-        // let isValid = false
-        // if (text.trim().length > 0) {
-        //     // trim()删除了空格
-        //     // setTitleIsValid(false);
-        //     isValid = true
-        // }
-        // else {
-        // setTitleIsValid(true);
-        // }
-        // setTitle(text);
-        dispatchFormState({
-            // 来源于 初始化的 useReducer 改变state
-            type: FORM_INPUT_UPDATE, // dispatch什么样的方法
-            value: inputValue, // 传入输入值
-            isValid: inputValidity,//判断输入的值是否能用
-            input: inputIdentifier  // 什么样会trigger这个dispatch
-        })
-    }, [dispatchFormState])
+    const signupHandler = () =>{
 
-
-    useEffect(()=>{
-        if(error){// 这个error来源于 auth 里面 throw的new error
-            Alert.alert("An Error occurred",error, [{text:"Okey"}])
-        }
-    },[error])
-
-    const authHandler = async () => {
-        let action;
-        if (isSignup) {// 一开始是 sign up 也就是没有注册过的情况
-            action = authActions.signup(
-                formState.inputValues.email,
-                formState.inputValues.password)
-        } else {
-            action = authActions.login(
-                formState.inputValues.email,
-                formState.inputValues.password)
-        }
-        setIsError(null);
-        setIsLoading(true);
-        try{
-            await dispatch(action);
-        }catch(err){
-            setIsError(err.message)
-        }
-        setIsLoading(false);
     }
     return (
         <KeyboardAvoidingView
@@ -147,8 +101,8 @@ const AuthScreen = props => {
                             required
                             email
                             autoCapitalize="none"
-                            errorText="Please enter a valid email address"
-                            onInputChange={inputChangeHandler}
+                            errorMessage="Please enter a valid email address"
+                            onInputChange={() => { }}
                             initialValue=""
                         />
 
@@ -160,28 +114,24 @@ const AuthScreen = props => {
                             required
                             minLength={5}
                             autoCapitalize="none"
-                            errorText="Please enter a valid password"
-                            onInputChange={inputChangeHandler}
+                            errorMessage="Please enter a valid password"
+                            onInputChange={() => { }}
                             initialValue=""
                         />
-                        {/* 转换model的形式！！！ */}
                         <View style={styles.buttonContainer}>
-                            {isLoading?<ActivityIndicator size='small' color={Colors.primary}/>
-                            :<Button
-                                    title={isSignup ? "Sign up" : "Login"}
-                                    color={Colors.primary}
-                                    onPress={authHandler} />}
-                            
+                            <Button
+                                title="Login"
+                                color={Colors.primary}
+                                onPress={() => { }} />
                         </View>
                         <View style={styles.buttonContainer}>
                             <Button
-                                title={`Switch to ${isSignup ? 'Login' : 'Sign up'}`}
+                                title="Switch to Sign up"
                                 color={Colors.accent}
-                                onPress={() => {
-                                    setIsSignup(prevState => !prevState)
-                                }}
+                                onPress={() => { }}
                             />
                         </View>
+
                     </ScrollView>
                 </Cart>
             </LinearGradient>
@@ -195,6 +145,7 @@ AuthScreen.navigationOptions = {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+
     },
     gradient: {
         flex: 1,

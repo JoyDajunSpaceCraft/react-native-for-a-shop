@@ -35,10 +35,12 @@ export const signup = (email, password) => {
             //   }
             let message = "Something is wrong "
             const errorId = errorResData.error.message;
-            if (errorId === 'EMAIL_EXISTS') {
-                message = "This email is already exist!";
+            if (errorId === 'EMAIL_NOT_FOUND') {
+                message = "This email is not found!";
             }
-            
+            else if (errorId === 'INVALID_PASSWORD') {
+                message = "This password is invalid"
+            }
             throw new Error(message); // 这里的error传到AuthScreen 中 setIsError(err.message)
         }
         const resData = await response.json();

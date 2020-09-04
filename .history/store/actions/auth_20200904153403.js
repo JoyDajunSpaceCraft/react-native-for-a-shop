@@ -17,29 +17,8 @@ export const signup = (email, password) => {
             }
         ); // fetch网址https://firebase.google.com/docs/reference/rest/auth#section-create-email-password [API KEY] :项目设置中
 
-        if (!response.ok) {//signin 界面要匹配数据库中数据
-            const errorResData = await response.json();
-            // console.log(errorResData);//精细化错误表达
-            // Object {
-            //     "error": Object {
-            //       "code": 400,
-            //       "errors": Array [
-            //         Object {
-            //           "domain": "global",
-            //           "message": "EMAIL_NOT_FOUND",
-            //           "reason": "invalid",
-            //         },
-            //       ],
-            //       "message": "EMAIL_NOT_FOUND",
-            //     },
-            //   }
-            let message = "Something is wrong "
-            const errorId = errorResData.error.message;
-            if (errorId === 'EMAIL_EXISTS') {
-                message = "This email is already exist!";
-            }
-            
-            throw new Error(message); // 这里的error传到AuthScreen 中 setIsError(err.message)
+        if (!response.ok) {
+            throw new Error('Something wrong in auth!');
         }
         const resData = await response.json();
         console.log(resData)
@@ -87,7 +66,7 @@ export const login = (email, password) => {
                 message = "This email is not found!";
             }
             else if (errorId === 'INVALID_PASSWORD') {
-                message = "This password is invalid"
+                message = "This "
             }
             throw new Error(message); // 这里的error传到AuthScreen 中 setIsError(err.message)
         }

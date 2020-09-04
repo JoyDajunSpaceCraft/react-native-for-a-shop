@@ -1,12 +1,10 @@
-import React, { useReducer, useCallback, useState,useEffect } from 'react';
+import React, { useReducer } from 'react';
 import {
     ScrollView,
     View,
     Button,
     KeyboardAvoidingView,
-    StyleSheet,
-    ActivityIndicator,
-    Alert
+    StyleSheet
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient' //npm install --save expo-linear-gradient  实现 线性的颜色变换
 import { useDispatch } from 'react-redux';
@@ -56,10 +54,6 @@ const formReducer = (state, action) => {
 }
 
 const AuthScreen = props => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [isSignup, setIsSignup] = useState(false);// 判断是否是signup
-    const [error, setIsError] = useState();
-
     const dispatch = useDispatch();
     const [formState, dispatchFormState] = useReducer(// 初始化 类似于useState用法
         // formState 是所有的键入按钮状态 每次有修改 就会重新加载EditProductScreen 赋予新的state 
@@ -77,59 +71,36 @@ const AuthScreen = props => {
                 email: false,
                 password: false
             },
-            formIsValid: false
-        }
+            formIsValid:false
+        }    
     );
 
 
-    const inputChangeHandler = useCallback(
-        (inputIdentifier, inputValue, inputValidity) => {
-        // useReducer用来处理 dispatch的地方
-        // let isValid = false
-        // if (text.trim().length > 0) {
-        //     // trim()删除了空格
-        //     // setTitleIsValid(false);
-        //     isValid = true
-        // }
-        // else {
-        // setTitleIsValid(true);
-        // }
-        // setTitle(text);
-        dispatchFormState({
-            // 来源于 初始化的 useReducer 改变state
-            type: FORM_INPUT_UPDATE, // dispatch什么样的方法
-            value: inputValue, // 传入输入值
-            isValid: inputValidity,//判断输入的值是否能用
-            input: inputIdentifier  // 什么样会trigger这个dispatch
-        })
-    }, [dispatchFormState])
+    const inputChangeHandler = (inputIdentifier, inputValue, inputValidity) => {
+            // useReducer用来处理 dispatch的地方
+            // let isValid = false
+            // if (text.trim().length > 0) {
+            //     // trim()删除了空格
+            //     // setTitleIsValid(false);
+            //     isValid = true
+            // }
+            // else {
+            // setTitleIsValid(true);
+            // }
+            // setTitle(text);
+            console.log("输入到input里面的通过 inputChangeHandler 方法传入的 ", inputValue) // 这里是
+            dispatchFormState({
+                // 来源于 初始化的 useReducer 改变state
+                type: FORM_INPUT_UPDATE, // dispatch什么样的方法
+                value: inputValue, // 传入输入值
+                isValid: inputValidity,//判断输入的值是否能用
+                input: inputIdentifier  // 什么样会trigger这个dispatch
+            })
+        }, [dispatchFormState])
+    }
 
+    const signupHandler = () => {
 
-    useEffect(()=>{
-        if(error){// 这个error来源于 auth 里面 throw的new error
-            Alert.alert("An Error occurred",error, [{text:"Okey"}])
-        }
-    },[error])
-
-    const authHandler = async () => {
-        let action;
-        if (isSignup) {// 一开始是 sign up 也就是没有注册过的情况
-            action = authActions.signup(
-                formState.inputValues.email,
-                formState.inputValues.password)
-        } else {
-            action = authActions.login(
-                formState.inputValues.email,
-                formState.inputValues.password)
-        }
-        setIsError(null);
-        setIsLoading(true);
-        try{
-            await dispatch(action);
-        }catch(err){
-            setIsError(err.message)
-        }
-        setIsLoading(false);
     }
     return (
         <KeyboardAvoidingView
@@ -147,8 +118,8 @@ const AuthScreen = props => {
                             required
                             email
                             autoCapitalize="none"
-                            errorText="Please enter a valid email address"
-                            onInputChange={inputChangeHandler}
+                            errorMessage="Please enter a valid email address"
+                            onInputChange={dispatchFormState}
                             initialValue=""
                         />
 
@@ -160,28 +131,24 @@ const AuthScreen = props => {
                             required
                             minLength={5}
                             autoCapitalize="none"
-                            errorText="Please enter a valid password"
-                            onInputChange={inputChangeHandler}
+                            errorMessage="Please enter a valid password"
+                            onInputChange={() => { }}
                             initialValue=""
                         />
-                        {/* 转换model的形式！！！ */}
                         <View style={styles.buttonContainer}>
-                            {isLoading?<ActivityIndicator size='small' color={Colors.primary}/>
-                            :<Button
-                                    title={isSignup ? "Sign up" : "Login"}
-                                    color={Colors.primary}
-                                    onPress={authHandler} />}
-                            
+                            <Button
+                                title="Login"
+                                color={Colors.primary}
+                                onPress={() => { }} />
                         </View>
                         <View style={styles.buttonContainer}>
                             <Button
-                                title={`Switch to ${isSignup ? 'Login' : 'Sign up'}`}
+                                title="Switch to Sign up"
                                 color={Colors.accent}
-                                onPress={() => {
-                                    setIsSignup(prevState => !prevState)
-                                }}
+                                onPress={() => { }}
                             />
                         </View>
+
                     </ScrollView>
                 </Cart>
             </LinearGradient>
@@ -195,6 +162,7 @@ AuthScreen.navigationOptions = {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+
     },
     gradient: {
         flex: 1,
