@@ -112,7 +112,7 @@ export const login = (email, password) => {
         const resData = await response.json();
         // dispatch({ type: LOGIN, token: resData.idToken, userId: resData.localId });
         dispatch(authenticate(resData.localId, resData.idToken))// 对 reducer中传入的参数不再是obj 而转换为方法 这样做是为计入一个常量 authenticate表示用户登录已经验证过
-        console.log(resData);
+        console.log(resData)
         const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000);// 设置 用户名密码在其中的失效时间
         saveDataToStorage(resData.idToken, resData.localId, expirationDate)
     }

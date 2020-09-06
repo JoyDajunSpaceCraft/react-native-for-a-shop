@@ -1,4 +1,4 @@
-import { AUTHENTICATE ,LOGOUT} from "../actions/auth";
+import { AUTHENTICATE } from "../actions/auth";
 // import { LOGIN, SIGNUP } from "../actions/auth";
 
 const initialState = {
@@ -7,13 +7,11 @@ const initialState = {
 };
 export default (state = initialState, action) => {
     switch (action.type) {
-        case AUTHENTICATE:// 不再使用 LOGIN SIGNUP 而是使用 AUTHENTICATE因为从action中传入的就是 AUTHENTICATE
+        case AUTHENTICATE:
             return {
                 token: action.token,
                 userId: action.userId
             }
-        case LOGOUT:
-            return initialState;//退出登录就是初始状态
 
         // case SIGNUP:
         //     return {

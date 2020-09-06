@@ -2,12 +2,11 @@ import React from 'react'; // 因为使用了 <Ionicon>这样的jsx需要加上R
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
  // createSwitchNavigator 针对 登录界面的 nav 一旦登录到这个界面 之后就不会返回这个界面
 import { createStackNavigator } from 'react-navigation-stack';
-import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
-//npm install --save react-navigation-drawer
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';//npm install --save react-navigation-drawer
 // import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Platform, SafeAreaView, Button, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux'
 
 import ProductsOverviewScreen from '../screens/shop/ProductsOverviewScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
@@ -94,8 +93,7 @@ const shopNavigator = createDrawerNavigator({
     Admin: AdminNavigator
 }, {
     contentOptions: {
-        activeTintColor: Colors.primary
-         //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
+        activeTintColor: Colors.primary //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
     },
     contentComponet: props => {
         const dispatch = useDispatch();
@@ -107,9 +105,7 @@ const shopNavigator = createDrawerNavigator({
                     <Button
                         title="Logout"
                         color={Colors.primary}
-                        onPress={() => { dispatch(authActions.logout())
-                            props.navigation.navigate("Auth");
-                        }}
+                        onPress={() => { dispatch(authActions.logout()) }}
                     />
                 </SafeAreaView>
 

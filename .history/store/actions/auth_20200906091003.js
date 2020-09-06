@@ -1,9 +1,8 @@
 import { AsyncStorage } from 'react-native'; //存储 tokensession 不用一直登录
 
-// export const SIGNUP = 'SIGNUP';
-// export const LOGIN = 'LOGIN';
+export const SIGNUP = 'SIGNUP';
+export const LOGIN = 'LOGIN';
 export const AUTHENTICATE = 'AUTHENTICATE';
-export const LOGOUT='LOGOUT';
 
 export const authenticate = (userId, token) => {
     return { type: AUTHENTICATE, userId: userId, token: token } // 在Startup 界面中想要 dispatch的几个信息
@@ -61,11 +60,6 @@ export const signup = (email, password) => {
     }
 }
 
-export const logout = () =>{
-    // 退出button
-    return {type:LOGOUT}
-}
-
 export const login = (email, password) => {
     return async dispatch => {
         const response = await fetch(// 创建一个新用户
@@ -112,7 +106,7 @@ export const login = (email, password) => {
         const resData = await response.json();
         // dispatch({ type: LOGIN, token: resData.idToken, userId: resData.localId });
         dispatch(authenticate(resData.localId, resData.idToken))// 对 reducer中传入的参数不再是obj 而转换为方法 这样做是为计入一个常量 authenticate表示用户登录已经验证过
-        console.log(resData);
+        
         const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000);// 设置 用户名密码在其中的失效时间
         saveDataToStorage(resData.idToken, resData.localId, expirationDate)
     }

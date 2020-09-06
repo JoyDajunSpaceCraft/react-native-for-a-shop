@@ -1,13 +1,10 @@
 import React from 'react'; // 因为使用了 <Ionicon>这样的jsx需要加上React的依赖
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
- // createSwitchNavigator 针对 登录界面的 nav 一旦登录到这个界面 之后就不会返回这个界面
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'; // createSwitchNavigator 针对 登录界面的 nav 一旦登录到这个界面 之后就不会返回这个界面
 import { createStackNavigator } from 'react-navigation-stack';
-import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
-//npm install --save react-navigation-drawer
+import { createDrawerNavigator } from 'react-navigation-drawer';//npm install --save react-navigation-drawer
 // import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { Platform, SafeAreaView, Button, View } from 'react-native';
+import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
 
 import ProductsOverviewScreen from '../screens/shop/ProductsOverviewScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
@@ -18,7 +15,6 @@ import EditProductScreen from '../screens/user/EditProductScreen';
 import AuthScreen from '../screens/user/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
 import Colors from '../constants/Colors';
-import * as authActions from '../store/actions/auth';
 
 
 const defaultNavOptions = {
@@ -46,8 +42,7 @@ const ProductsNavigator = createStackNavigator({
         drawerIcon: (drawConfig) => <Ionicons
             name={Platform.OS == 'android' ? 'md-cart' : 'ios-cart'}
             size={23}
-            color={drawConfig.tintColor}
-            // known whether the item is selected and change itself 
+            color={drawConfig.tintColor}// known whether the item is selected and change itself 
         />
     },
     defaultNavigationOptions: defaultNavOptions
@@ -63,8 +58,7 @@ const OrdersNavigator = createStackNavigator({
         drawerIcon: (drawConfig) => <Ionicons
             name={Platform.OS == 'android' ? 'md-list' : 'ios-list'}
             size={23}
-            color={drawConfig.tintColor}
-            // known whether the item is selected and change itself 
+            color={drawConfig.tintColor}// known whether the item is selected and change itself 
         />
     },
     defaultNavigationOptions: defaultNavOptions
@@ -80,8 +74,7 @@ const AdminNavigator = createStackNavigator(
         drawerIcon: (drawConfig) => <Ionicons
             name={Platform.OS == 'android' ? 'md-create' : 'ios-create'}
             size={23}
-            color={drawConfig.tintColor}
-            // known whether the item is selected and change itself 
+            color={drawConfig.tintColor}// known whether the item is selected and change itself 
         />
     },
     defaultNavigationOptions: defaultNavOptions
@@ -94,41 +87,25 @@ const shopNavigator = createDrawerNavigator({
     Admin: AdminNavigator
 }, {
     contentOptions: {
-        activeTintColor: Colors.primary
-         //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
+        activeTintColor: Colors.primary //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
     },
-    contentComponet: props => {
-        const dispatch = useDispatch();
-        //SafeAreaView 适用于此处 
-        return (
-            <View style={{ flex: 1, paddingTop: 10 }}>
-                <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-                    <DrawerItems {...props} />
-                    <Button
-                        title="Logout"
-                        color={Colors.primary}
-                        onPress={() => { dispatch(authActions.logout())
-                            props.navigation.navigate("Auth");
-                        }}
-                    />
-                </SafeAreaView>
-
-            </View>
-        )
+    constentComponet :props=>{
+        //
     }
 
+}
 })
 
 const AuthNavigator = createSwitchNavigator({
-    Auth: AuthScreen,// Auth 作为第一个screen
+    Auth:AuthScreen,// Auth 作为第一个screen
 },
-    {
-        defaultNavigationOptions: defaultNavOptions
-    });
+{
+    defaultNavigationOptions:defaultNavOptions
+});
 const MainNavigator = createSwitchNavigator({
-    Startup: StartupScreen,
-    Auth: AuthNavigator,
-    Shop: shopNavigator
+    Startup:StartupScreen,
+    Auth:AuthNavigator,
+    Shop:shopNavigator
 })
 
 export default createAppContainer(MainNavigator)

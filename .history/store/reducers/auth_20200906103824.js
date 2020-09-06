@@ -12,8 +12,6 @@ export default (state = initialState, action) => {
                 token: action.token,
                 userId: action.userId
             }
-        case LOGOUT:
-            return initialState;//退出登录就是初始状态
 
         // case SIGNUP:
         //     return {

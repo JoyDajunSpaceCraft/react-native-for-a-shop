@@ -1,15 +1,7 @@
 import { AsyncStorage } from 'react-native'; //存储 tokensession 不用一直登录
 
-// export const SIGNUP = 'SIGNUP';
-// export const LOGIN = 'LOGIN';
-export const AUTHENTICATE = 'AUTHENTICATE';
-export const LOGOUT='LOGOUT';
-
-export const authenticate = (userId, token) => {
-    return { type: AUTHENTICATE, userId: userId, token: token } // 在Startup 界面中想要 dispatch的几个信息
-}
-
-
+export const SIGNUP = 'SIGNUP';
+export const LOGIN = 'LOGIN';
 export const signup = (email, password) => {
     return async dispatch => {
         const response = await fetch(// 创建一个新用户
@@ -52,18 +44,10 @@ export const signup = (email, password) => {
             throw new Error(message); // 这里的error传到AuthScreen 中 setIsError(err.message)
         }
         const resData = await response.json();
-        // dispatch({ type: SIGNUP, token: resData.idToken, userId: resData.localId })
-        dispatch(authenticate(resData.localId, resData.idToken))// 对 reducer中传入的参数不再是obj 而转换为方法 这样做是为计入一个常量 authenticate表示用户登录已经验证过
-        // console.log(resData)
-        const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000);
-        saveDataToStorage(resData.idToken, resData.localId, expirationDate)
+        console.log(resData)
 
+        dispatch({ type: SIGNUP, token: resData.idToken, userId: resData.localId })
     }
-}
-
-export const logout = () =>{
-    // 退出button
-    return {type:LOGOUT}
 }
 
 export const login = (email, password) => {
@@ -110,22 +94,19 @@ export const login = (email, password) => {
             throw new Error(message); // 这里的error传到AuthScreen 中 setIsError(err.message)
         }
         const resData = await response.json();
-        // dispatch({ type: LOGIN, token: resData.idToken, userId: resData.localId });
-        dispatch(authenticate(resData.localId, resData.idToken))// 对 reducer中传入的参数不再是obj 而转换为方法 这样做是为计入一个常量 authenticate表示用户登录已经验证过
-        console.log(resData);
-        const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000);// 设置 用户名密码在其中的失效时间
-        saveDataToStorage(resData.idToken, resData.localId, expirationDate)
+        dispatch({ type: LOGIN, token: resData.idToken, userId: resData.localId });
+        const expirationDate = new Date();// 设置 用户名密码在其中的失效时间
+        saveDataToStorage(resData.idToken, resData.localId)
     }
 };
-const saveDataToStorage = (token, userId, expirationDate) => {
+const saveDataToStorage = (token, userId) => {
     // 将用户的信息作为session存入本地机器
     AsyncStorage.setItem("userData",// userData是作为key
         // 一定要是String
         JSON.stringify(
             {
                 token: token,
-                userId: userId,
-                expriyDate: expirationDate.toISOString()
+                userId: userId
             }
         )
     );

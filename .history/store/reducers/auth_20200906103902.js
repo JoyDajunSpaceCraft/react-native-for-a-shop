@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
                 userId: action.userId
             }
         case LOGOUT:
-            return initialState;//退出登录就是初始状态
+            return initialState;//退出登录就是初始装热爱
 
         // case SIGNUP:
         //     return {

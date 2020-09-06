@@ -94,8 +94,7 @@ const shopNavigator = createDrawerNavigator({
     Admin: AdminNavigator
 }, {
     contentOptions: {
-        activeTintColor: Colors.primary
-         //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
+        activeTintColor: Colors.primary //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
     },
     contentComponet: props => {
         const dispatch = useDispatch();
@@ -107,9 +106,7 @@ const shopNavigator = createDrawerNavigator({
                     <Button
                         title="Logout"
                         color={Colors.primary}
-                        onPress={() => { dispatch(authActions.logout())
-                            props.navigation.navigate("Auth");
-                        }}
+                        onPress={() => { dispatch(authActions.logout()) }}
                     />
                 </SafeAreaView>
 
