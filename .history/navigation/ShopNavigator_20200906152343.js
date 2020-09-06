@@ -1,6 +1,6 @@
 import React from 'react'; // 因为使用了 <Ionicon>这样的jsx需要加上React的依赖
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-// createSwitchNavigator 针对 登录界面的 nav 一旦登录到这个界面 之后就不会返回这个界面 适用于login/signin
+// createSwitchNavigator 针对 登录界面的 nav 一旦登录到这个界面 之后就不会返回这个界面 适用于login
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
 //npm install --save react-navigation-drawer
@@ -90,19 +90,17 @@ const AdminNavigator = createStackNavigator(
     defaultNavigationOptions: defaultNavOptions
 });
 
-const ShopNavigator = createDrawerNavigator(
-    {
+const shopNavigator = createDrawerNavigator({
     // merge ProductsNavigator OrdersNavigator 总之就是套娃
     Products: ProductsNavigator,
     Orders: OrdersNavigator,
     Admin: AdminNavigator
-}, 
-{
+}, {
     contentOptions: {
         activeTintColor: Colors.primary
         //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
     },
-    contentComponent: props => {
+    contentComponet: props => {
         console.log('contentComponent');
         const dispatch = useDispatch();
         //SafeAreaView 适用于此处 
@@ -135,7 +133,7 @@ const AuthNavigator = createStackNavigator({
 const MainNavigator = createSwitchNavigator({
     Startup: StartupScreen,
     Auth: AuthNavigator,
-    Shop: ShopNavigator
+    Shop: shopNavigator
 });
 
 export default createAppContainer(MainNavigator)

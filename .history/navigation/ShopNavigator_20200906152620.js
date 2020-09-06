@@ -90,41 +90,71 @@ const AdminNavigator = createStackNavigator(
     defaultNavigationOptions: defaultNavOptions
 });
 
+// const ShopNavigator = createDrawerNavigator(
+//     {
+//     // merge ProductsNavigator OrdersNavigator 总之就是套娃
+//     Products: ProductsNavigator,
+//     Orders: OrdersNavigator,
+//     Admin: AdminNavigator
+// }, 
+// {
+//     contentOptions: {
+//         activeTintColor: Colors.primary
+//         //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
+//     },
+//     contentComponet: props => {
+//         console.log('contentComponent');
+//         const dispatch = useDispatch();
+//         //SafeAreaView 适用于此处 
+//         return (
+//             <View style={{ flex: 1, paddingTop: '10' }}>
+//                 <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+//                     <DrawerNavigatorItems {...props} />
+//                     <Button
+//                         title="Logout"
+//                         color={Colors.primary}
+//                         onPress={() => {
+//                             dispatch(authActions.logout());
+//                             // props.navigation.navigate("Auth");
+//                         }}
+//                     />
+//                 </SafeAreaView>
+//             </View>
+//             // <Text>newnewnew</Text>
+//         );
+//     }
+// }
+// )
 const ShopNavigator = createDrawerNavigator(
     {
-    // merge ProductsNavigator OrdersNavigator 总之就是套娃
-    Products: ProductsNavigator,
-    Orders: OrdersNavigator,
-    Admin: AdminNavigator
-}, 
-{
-    contentOptions: {
-        activeTintColor: Colors.primary
-        //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
+      Products: ProductsNavigator,
+      Orders: OrdersNavigator,
+      Admin: AdminNavigator
     },
-    contentComponent: props => {
-        console.log('contentComponent');
+    {
+      contentOptions: {
+        activeTintColor: Colors.primary
+      },
+      contentComponent: props => {
         const dispatch = useDispatch();
-        //SafeAreaView 适用于此处 
         return (
-            <View style={{ flex: 1, paddingTop: '10' }}>
-                <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-                    <DrawerNavigatorItems {...props} />
-                    <Button
-                        title="Logout"
-                        color={Colors.primary}
-                        onPress={() => {
-                            dispatch(authActions.logout());
-                            // props.navigation.navigate("Auth");
-                        }}
-                    />
-                </SafeAreaView>
-            </View>
-            // <Text>newnewnew</Text>
+          <View style={{ flex: 1, paddingTop: 20 }}>
+            <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+              <DrawerItems {...props} />
+              <Button
+                title="Logout"
+                color={Colors.primary}
+                onPress={() => {
+                  dispatch(authActions.logout());
+                  // props.navigation.navigate('Auth');
+                }}
+              />
+            </SafeAreaView>
+          </View>
         );
+      }
     }
-}
-)
+  );
 
 const AuthNavigator = createStackNavigator({
     Auth: AuthScreen,// Auth 作为第一个screen

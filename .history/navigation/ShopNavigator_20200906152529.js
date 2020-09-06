@@ -90,19 +90,17 @@ const AdminNavigator = createStackNavigator(
     defaultNavigationOptions: defaultNavOptions
 });
 
-const ShopNavigator = createDrawerNavigator(
-    {
+const ShopNavigator = createDrawerNavigator({
     // merge ProductsNavigator OrdersNavigator 总之就是套娃
     Products: ProductsNavigator,
     Orders: OrdersNavigator,
     Admin: AdminNavigator
-}, 
-{
+}, {
     contentOptions: {
         activeTintColor: Colors.primary
         //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
     },
-    contentComponent: props => {
+    contentComponet: props => {
         console.log('contentComponent');
         const dispatch = useDispatch();
         //SafeAreaView 适用于此处 

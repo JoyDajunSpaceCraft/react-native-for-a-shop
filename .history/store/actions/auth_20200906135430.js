@@ -3,15 +3,15 @@ import { AsyncStorage } from 'react-native'; //存储 tokensession 不用一直�
 // export const SIGNUP = 'SIGNUP';
 // export const LOGIN = 'LOGIN';
 export const AUTHENTICATE = 'AUTHENTICATE';
-export const LOGOUT = 'LOGOUT';
+export const LOGOUT='LOGOUT';
 
 let timer;
 
 export const authenticate = (userId, token, expriationTime) => {
     // return { type: AUTHENTICATE, userId: userId, token: token } // 在Startup 界面中想要 dispatch的几个信息
-    return dispatch => {
-        dispatch(setLogoutTimmer(expriationTime));
-        dispatch({ type: AUTHENTICATE, userId: userId, token: token });
+    return dispatch =>{
+        dispatch(setLogoutTimmer(expriationTime ));
+        dispatch({type: AUTHENTICATE, userId: userId, token: token});
     }
 }
 
@@ -61,9 +61,9 @@ export const signup = (email, password) => {
         // dispatch({ type: SIGNUP, token: resData.idToken, userId: resData.localId })
         dispatch(
             authenticate(
-                resData.localId,
+                resData.localId, 
                 resData.idToken,
-                parseInt(resData.expiresIn) * 1000
+                parseInt(resData.expiresIn) *1000
             ))// 对 reducer中传入的参数不再是obj 而转换为方法 这样做是为计入一个常量 authenticate表示用户登录已经验证过
         // console.log(resData)
         const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000);
@@ -72,29 +72,29 @@ export const signup = (email, password) => {
     }
 };
 
-export const logout = () => {
+export const logout = () =>{
     // 退出button
     clearLogoutTimer();
-    AsyncStorage.removeItem("userData");
-    return { type: LOGOUT }
+    AsyncStorage.removeItem("userData"); 
+    return {type:LOGOUT}
 };
 
 
-const clearLogoutTimer = () => {
-    if (timer) {
-        clearTimeout(timer);//clearTimeout() 方法可取消由 setTimeout() 方法设置的 timeout
+const clearLogoutTimer = ()=>{
+    if(timer){
+    clearTimeout(timer);//clearTimeout() 方法可取消由 setTimeout() 方法设置的 timeout
     }
 }
 
-const setLogoutTimmer = expriationTime => {
+const setLogoutTimmer = expriationTime =>{
     // 在expirationDate 结束之后就自动登出
-    return dispatch => {
+    return dispatch =>{
         // 利用 redux-thunk
-        timer = setTimeout(() => {
-            dispatch(logout())
-        }, expriationTime  )
+        timer = setTimeout(()=>{
+            dispatch(logout)
+        },expriationTime)
     }
-
+    
 }
 
 export const login = (email, password) => {
@@ -144,10 +144,10 @@ export const login = (email, password) => {
         // dispatch({ type: LOGIN, token: resData.idToken, userId: resData.localId });
         dispatch(
             authenticate(
-                resData.localId,
+                resData.localId, 
                 resData.idToken,
-                parseInt(resData.expiresIn) * 1000
-            ))// 对 reducer中传入的参数不再是obj 而转换为方法 这样做是为计入一个常量 authenticate表示用户登录已经验证过
+                parseInt(resData.expiresIn) *1000
+                ))// 对 reducer中传入的参数不再是obj 而转换为方法 这样做是为计入一个常量 authenticate表示用户登录已经验证过
         console.log(resData);
         const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000);// 设置 用户名密码在其中的失效时间
         saveDataToStorage(resData.idToken, resData.localId, expirationDate)

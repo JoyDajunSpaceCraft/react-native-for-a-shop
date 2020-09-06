@@ -92,7 +92,7 @@ const setLogoutTimmer = expriationTime => {
         // 利用 redux-thunk
         timer = setTimeout(() => {
             dispatch(logout())
-        }, expriationTime  )
+        }, expriationTime / 1000 )
     }
 
 }

@@ -1,11 +1,11 @@
 import React from 'react'; // 因为使用了 <Ionicon>这样的jsx需要加上React的依赖
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-// createSwitchNavigator 针对 登录界面的 nav 一旦登录到这个界面 之后就不会返回这个界面 适用于login/signin
+ // createSwitchNavigator 针对 登录界面的 nav 一旦登录到这个界面 之后就不会返回这个界面
 import { createStackNavigator } from 'react-navigation-stack';
-import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 //npm install --save react-navigation-drawer
 // import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { Platform, SafeAreaView, Button, View, Text } from 'react-native';
+import { Platform, SafeAreaView, Button, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 
@@ -47,7 +47,7 @@ const ProductsNavigator = createStackNavigator({
             name={Platform.OS == 'android' ? 'md-cart' : 'ios-cart'}
             size={23}
             color={drawConfig.tintColor}
-        // known whether the item is selected and change itself 
+            // known whether the item is selected and change itself 
         />
     },
     defaultNavigationOptions: defaultNavOptions
@@ -55,20 +55,17 @@ const ProductsNavigator = createStackNavigator({
 
 
 // 针对 drawer 设置 icon 需要在每个navigator中单独设置 
-const OrdersNavigator = createStackNavigator(
-    {
+const OrdersNavigator = createStackNavigator({
     Orders: OrdersScreen
 }, {
     navigationOptions: {
         // drawConfig是 在总的shopNavigator 中定义的 contentOptions ->activeTintColor
-        drawerIcon: (drawConfig) => (
-            <Ionicons
-                name={Platform.OS == 'android' ? 'md-list' : 'ios-list'}
-                size={23}
-                color={drawConfig.tintColor}
+        drawerIcon: (drawConfig) => <Ionicons
+            name={Platform.OS == 'android' ? 'md-list' : 'ios-list'}
+            size={23}
+            color={drawConfig.tintColor}
             // known whether the item is selected and change itself 
-            />
-        )
+        />
     },
     defaultNavigationOptions: defaultNavOptions
 });
@@ -84,49 +81,47 @@ const AdminNavigator = createStackNavigator(
             name={Platform.OS == 'android' ? 'md-create' : 'ios-create'}
             size={23}
             color={drawConfig.tintColor}
-        // known whether the item is selected and change itself 
+            // known whether the item is selected and change itself 
         />
     },
     defaultNavigationOptions: defaultNavOptions
 });
 
-const ShopNavigator = createDrawerNavigator(
-    {
+const shopNavigator = createDrawerNavigator({
     // merge ProductsNavigator OrdersNavigator 总之就是套娃
     Products: ProductsNavigator,
     Orders: OrdersNavigator,
     Admin: AdminNavigator
-}, 
-{
+}, {
     contentOptions: {
         activeTintColor: Colors.primary
-        //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
+         //这个activeTintColor 就是能够应用于所有drawerIcon中 的 drawCofig传入的参数
     },
-    contentComponent: props => {
-        console.log('contentComponent');
+    contentComponet: props => {
         const dispatch = useDispatch();
         //SafeAreaView 适用于此处 
         return (
-            <View style={{ flex: 1, paddingTop: '10' }}>
+            
+            <View style={{ flex: 1, paddingTop:'10' }}>
+                <View><Text>sadas</Text></View>
                 <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-                    <DrawerNavigatorItems {...props} />
+                    <DrawerItems {...props} />
                     <Button
                         title="Logout"
                         color={Colors.primary}
-                        onPress={() => {
-                            dispatch(authActions.logout());
+                        onPress={() => { dispatch(authActions.logout())
                             // props.navigation.navigate("Auth");
                         }}
                     />
                 </SafeAreaView>
-            </View>
-            // <Text>newnewnew</Text>
-        );
-    }
-}
-)
 
-const AuthNavigator = createStackNavigator({
+            </View>
+        )
+    }
+
+})
+
+const AuthNavigator = createSwitchNavigator({
     Auth: AuthScreen,// Auth 作为第一个screen
 },
     {
@@ -135,7 +130,7 @@ const AuthNavigator = createStackNavigator({
 const MainNavigator = createSwitchNavigator({
     Startup: StartupScreen,
     Auth: AuthNavigator,
-    Shop: ShopNavigator
-});
+    Shop: shopNavigator
+})
 
 export default createAppContainer(MainNavigator)

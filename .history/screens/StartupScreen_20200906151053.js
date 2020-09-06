@@ -28,6 +28,7 @@ const StartupScreen = props =>{
                     props.navigation.navigate('Auth');
                     return; 
                }
+
                // 在每次渲染之后需要计算已经过了多久 getTime 都是 milionsecond
                const expirationTime = expirationDate.getTime() - new Date().getTime()
 
@@ -39,6 +40,7 @@ const StartupScreen = props =>{
 
      return <View style={styles.screen}>
           <ActivityIndicator size="large" color={Colors.primary}/>
+
      </View>
 };
 const styles = StyleSheet.create({

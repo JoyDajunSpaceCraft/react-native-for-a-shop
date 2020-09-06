@@ -15,7 +15,7 @@ import ReduxThunk from 'redux-thunk';
 
 import productReducer from './store/reducers/products';
 // import ShopNavigator from './navigation/ShopNavigator';
-import NaviagtionContainer from './navigation/NaviagtionContainer';
+import NaviagtionContainer from './navigation/NaviagtionContainer'
 import cartReducer from './store/reducers/cart';
 import orderReducer from './store/reducers/orders';
 import authReducer from './store/reducers/auth';
@@ -49,7 +49,7 @@ export default function App() {
   }
   return (
     <Provider store={store}>
-      <NaviagtionContainer />
+      <ShopNavigator />
     </Provider>
   )
 };

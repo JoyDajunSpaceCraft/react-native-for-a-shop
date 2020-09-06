@@ -28,17 +28,19 @@ const StartupScreen = props =>{
                     props.navigation.navigate('Auth');
                     return; 
                }
+
                // 在每次渲染之后需要计算已经过了多久 getTime 都是 milionsecond
-               const expirationTime = expirationDate.getTime() - new Date().getTime()
+               const expirationTime = expirationDate.getTime() - new DataCue.getTime()
 
                props.navigation.navigate('Shop');
                dispatch(authActions.authenticate(userId, token,expirationTime));// 这里的dispatch是为了能够执行在指定 action中的方法 
           };
           tryLogin();
-     },[dispatch]) 
+     },[dispatch])
 
      return <View style={styles.screen}>
           <ActivityIndicator size="large" color={Colors.primary}/>
+
      </View>
 };
 const styles = StyleSheet.create({
